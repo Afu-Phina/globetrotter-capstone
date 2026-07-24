@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
   // Android emulator reaches the host machine's localhost via 10.0.2.2.
   // iOS simulator / web can use localhost directly.
-  static const String baseUrl = 'http://10.0.2.2:5000/api';
+  static const String baseUrl = 'http://172.20.10.2:5000/api';
 
   String? _authToken;
 
