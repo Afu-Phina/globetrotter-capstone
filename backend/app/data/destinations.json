@@ -1,0 +1,74 @@
+[
+  {
+    "id": "dest-001",
+    "name": "Mvog-Betsi Zoo",
+    "category": "Nature & Wildlife",
+    "neighborhood": "Mvog-Betsi",
+    "description": "A zoo and primate rescue center home to gorillas, chimpanzees and other native wildlife, run in partnership with conservation groups.",
+    "tags": ["nature", "family", "wildlife"],
+    "popularity": 88
+  },
+  {
+    "id": "dest-002",
+    "name": "Monument de la Réunification",
+    "category": "History & Culture",
+    "neighborhood": "Centre-ville",
+    "description": "A landmark monument commemorating the reunification of French and British Cameroon, with a spiral viewing platform over the city.",
+    "tags": ["history", "landmark", "views"],
+    "popularity": 95
+  },
+  {
+    "id": "dest-003",
+    "name": "Marche Central (Mfoundi Market)",
+    "category": "Markets & Shopping",
+    "neighborhood": "Mfoundi",
+    "description": "Yaoundé's largest and busiest market, packed with textiles, produce, crafts and street food stalls.",
+    "tags": ["shopping", "food", "local life"],
+    "popularity": 91
+  },
+  {
+    "id": "dest-004",
+    "name": "Notre-Dame des Victoires Cathedral",
+    "category": "History & Culture",
+    "neighborhood": "Centre-ville",
+    "description": "A striking Catholic cathedral known for its architecture and as a quiet spot in the busy city center.",
+    "tags": ["history", "architecture", "religion"],
+    "popularity": 76
+  },
+  {
+    "id": "dest-005",
+    "name": "Mont Fébé",
+    "category": "Nature & Views",
+    "neighborhood": "Fébé",
+    "description": "A hill overlooking the city with hiking trails, a hotel, and panoramic viewpoints popular at sunset.",
+    "tags": ["nature", "hiking", "views"],
+    "popularity": 84
+  },
+  {
+    "id": "dest-006",
+    "name": "Bastos Neighborhood",
+    "category": "Nightlife & Dining",
+    "neighborhood": "Bastos",
+    "description": "An upscale district known for restaurants, embassies, cafes and nightlife, popular with visitors and expats.",
+    "tags": ["dining", "nightlife", "upscale"],
+    "popularity": 80
+  },
+  {
+    "id": "dest-007",
+    "name": "National Museum of Yaoundé",
+    "category": "History & Culture",
+    "neighborhood": "Centre-ville",
+    "description": "Housed in a former presidential palace, showcasing Cameroonian art, artifacts and royal regalia.",
+    "tags": ["history", "art", "museum"],
+    "popularity": 72
+  },
+  {
+    "id": "dest-008",
+    "name": "Nsimeyong",
+    "category": "Local Life",
+    "neighborhood": "Nsimeyong",
+    "description": "A lively residential neighborhood known for local food spots and everyday Yaoundé street life.",
+    "tags": ["local life", "food"],
+    "popularity": 60
+  }
+]
