@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../services/destinations_service.dart';
-import '../services/itineraries_service.dart';
 import '../services/auth_service.dart';
 import '../models/destination.dart';
-import '../widgets/destination_card.dart';
+import '../widgets/destination_grid_card.dart';
+import '../widgets/destination_detail_sheet.dart';
 import '../widgets/hill_clipper.dart';
 import '../widgets/shimmer_loading.dart';
 import '../widgets/staggered_list_item.dart';
@@ -71,11 +71,12 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
     super.dispose();
   }
 
-  void _showAddToItinerarySheet(Destination destination) {
+  void _openDetail(Destination destination) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => _AddToItinerarySheet(destination: destination),
+      builder: (_) => DestinationDetailSheet(destination: destination),
     );
   }
 
@@ -167,13 +168,22 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
               ),
             ),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.sm)),
+          const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
         ],
         body: _loading
-            ? ListView.builder(
+            ? GridView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-                itemCount: 4,
-                itemBuilder: (_, __) => const DestinationCardShimmer(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: AppSpacing.md,
+                  crossAxisSpacing: AppSpacing.md,
+                  childAspectRatio: 0.78,
+                ),
+                itemCount: 6,
+                itemBuilder: (_, __) => ShimmerBox(
+                  height: double.infinity,
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                ),
               )
             : _error != null
                 ? Center(child: Text(_error!))
@@ -197,117 +207,32 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                       )
                     : RefreshIndicator(
                         onRefresh: _load,
-                        child: ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                        child: GridView.builder(
+                          padding: const EdgeInsets.fromLTRB(
+                            AppSpacing.md,
+                            0,
+                            AppSpacing.md,
+                            AppSpacing.lg,
+                          ),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: AppSpacing.md,
+                            crossAxisSpacing: AppSpacing.md,
+                            childAspectRatio: 0.78,
+                          ),
                           itemCount: _destinations.length,
                           itemBuilder: (context, index) {
                             final destination = _destinations[index];
                             return StaggeredListItem(
                               index: index,
-                              child: DestinationCard(
+                              child: DestinationGridCard(
                                 destination: destination,
-                                trailing: IconButton(
-                                  icon: const Icon(Icons.add_circle_outline),
-                                  color: AppColors.forest,
-                                  onPressed: () => _showAddToItinerarySheet(destination),
-                                ),
+                                onTap: () => _openDetail(destination),
                               ),
                             );
                           },
                         ),
                       ),
-      ),
-    );
-  }
-}
-
-/// Bottom sheet: add this destination to an existing itinerary, or create
-/// a brand new one with it as the first stop.
-class _AddToItinerarySheet extends StatefulWidget {
-  final Destination destination;
-  const _AddToItinerarySheet({required this.destination});
-
-  @override
-  State<_AddToItinerarySheet> createState() => _AddToItinerarySheetState();
-}
-
-class _AddToItinerarySheetState extends State<_AddToItinerarySheet> {
-  bool _loading = true;
-  List _itineraries = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _fetch();
-  }
-
-  Future<void> _fetch() async {
-    final results = await itinerariesService.list();
-    setState(() {
-      _itineraries = results;
-      _loading = false;
-    });
-  }
-
-  Future<void> _addTo(dynamic itinerary) async {
-    final updatedIds = [...itinerary.destinationIds, widget.destination.id];
-    await itinerariesService.update(itinerary.id, {'destination_ids': updatedIds});
-    if (mounted) Navigator.pop(context);
-  }
-
-  Future<void> _createNew() async {
-    await itinerariesService.create(
-      title: '${widget.destination.name} trip',
-      destinationIds: [widget.destination.id],
-    );
-    if (mounted) Navigator.pop(context);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.card)),
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  width: 40,
-                  height: 4,
-                  margin: const EdgeInsets.only(bottom: AppSpacing.md),
-                  decoration: BoxDecoration(
-                    color: AppColors.border,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-              ),
-              Text('Add to itinerary', style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: AppSpacing.md),
-              if (_loading) const Center(child: CircularProgressIndicator()),
-              if (!_loading)
-                ..._itineraries.map(
-                  (itinerary) => ListTile(
-                    leading: const Icon(Icons.map_outlined, color: AppColors.forest),
-                    title: Text(itinerary.title),
-                    onTap: () => _addTo(itinerary),
-                  ),
-                ),
-              const Divider(),
-              ListTile(
-                leading: const Icon(Icons.add_circle, color: AppColors.marigold),
-                title: const Text('Create new itinerary', style: TextStyle(fontWeight: FontWeight.w700)),
-                onTap: _createNew,
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

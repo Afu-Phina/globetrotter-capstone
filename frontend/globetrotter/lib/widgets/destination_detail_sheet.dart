@@ -1,0 +1,165 @@
+import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
+import '../models/destination.dart';
+import '../services/itineraries_service.dart';
+
+/// Shown when a destination card is tapped. Covers the "place details"
+/// idea from your reference mock -- description, tags, and adding it to
+/// an itinerary -- without the photo gallery / map / booking / chat
+/// pieces, which are outside Phase 1 (no image hosting, maps API, or
+/// booking system in this phase).
+class DestinationDetailSheet extends StatefulWidget {
+  final Destination destination;
+  const DestinationDetailSheet({super.key, required this.destination});
+
+  @override
+  State<DestinationDetailSheet> createState() => _DestinationDetailSheetState();
+}
+
+class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
+  bool _loadingItineraries = true;
+  List _itineraries = [];
+  bool _added = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetch();
+  }
+
+  Future<void> _fetch() async {
+    final results = await itinerariesService.list();
+    if (mounted) {
+      setState(() {
+        _itineraries = results;
+        _loadingItineraries = false;
+      });
+    }
+  }
+
+  Future<void> _addTo(dynamic itinerary) async {
+    final updatedIds = [...itinerary.destinationIds, widget.destination.id];
+    await itinerariesService.update(itinerary.id, {'destination_ids': updatedIds});
+    if (mounted) {
+      setState(() => _added = true);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Added to ${itinerary.title}')),
+      );
+    }
+  }
+
+  Future<void> _createNew() async {
+    await itinerariesService.create(
+      title: '${widget.destination.name} trip',
+      destinationIds: [widget.destination.id],
+    );
+    if (mounted) Navigator.pop(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final d = widget.destination;
+    return DraggableScrollableSheet(
+      initialChildSize: 0.72,
+      minChildSize: 0.4,
+      maxChildSize: 0.92,
+      expand: false,
+      builder: (context, scrollController) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.card)),
+          ),
+          child: ListView(
+            controller: scrollController,
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  margin: const EdgeInsets.only(bottom: AppSpacing.lg),
+                  decoration: BoxDecoration(
+                    color: AppColors.border,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: AppColors.forest.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      d.category,
+                      style: const TextStyle(fontSize: 12, color: AppColors.forest, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(d.name, style: Theme.of(context).textTheme.headlineMedium),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  const Icon(Icons.place, size: 14, color: AppColors.inkMuted),
+                  const SizedBox(width: 4),
+                  Text(d.neighborhood, style: Theme.of(context).textTheme.bodyMedium),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Text(d.description, style: Theme.of(context).textTheme.bodyLarge),
+              const SizedBox(height: AppSpacing.md),
+              Wrap(
+                spacing: 6,
+                runSpacing: 6,
+                children: d.tags
+                    .map((tag) => Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                            color: AppColors.papaya.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            tag,
+                            style: const TextStyle(fontSize: 12, color: AppColors.papaya, fontWeight: FontWeight.w600),
+                          ),
+                        ))
+                    .toList(),
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              const Divider(),
+              const SizedBox(height: AppSpacing.sm),
+              Text('Add to itinerary', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: AppSpacing.sm),
+              if (_loadingItineraries) const Center(child: CircularProgressIndicator()),
+              if (!_loadingItineraries)
+                ..._itineraries.map(
+                  (itinerary) => Card(
+                    margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+                    child: ListTile(
+                      leading: const Icon(Icons.map_outlined, color: AppColors.forest),
+                      title: Text(itinerary.title),
+                      trailing: _added ? const Icon(Icons.check_circle, color: AppColors.forest) : null,
+                      onTap: () => _addTo(itinerary),
+                    ),
+                  ),
+                ),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: _createNew,
+                  icon: const Icon(Icons.add),
+                  label: const Text('Create new itinerary'),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
