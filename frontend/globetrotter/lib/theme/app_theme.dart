@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// Removed google_fonts dependency to avoid missing package error.
+import 'package:google_fonts/google_fonts.dart';
 
 /// GlobeTrotter design system — "Seven Hills at Golden Hour".
 ///
@@ -51,36 +51,40 @@ class AppRadius {
 }
 
 class AppTheme {
+  // Built with GoogleFonts.getFont(name, ...) rather than the generated
+  // per-font convenience methods (e.g. bricolageGrotesqueTextTheme()).
+  // Those generated methods vary by google_fonts package version and can
+  // throw NoSuchMethodError if a given version didn't generate one for
+  // this font. getFont() takes the font family as a plain string and
+  // fetches it directly, so it works on any recent package version.
   static TextTheme get _textTheme {
-    final display = GoogleFonts.bricolageGrotesqueTextTheme();
-    final body = GoogleFonts.manropeTextTheme();
+    TextStyle display(double size, FontWeight weight, {double? letterSpacing, double? height}) {
+      return GoogleFonts.getFont(
+        'Bricolage Grotesque',
+        fontSize: size,
+        fontWeight: weight,
+        color: AppColors.ink,
+        letterSpacing: letterSpacing,
+        height: height,
+      );
+    }
+
+    TextStyle body(double size, FontWeight weight, Color color) {
+      return GoogleFonts.getFont(
+        'Manrope',
+        fontSize: size,
+        fontWeight: weight,
+        color: color,
+      );
+    }
 
     return TextTheme(
-      headlineLarge: display.headlineLarge?.copyWith(
-        fontSize: 32,
-        fontWeight: FontWeight.w700,
-        color: AppColors.ink,
-        height: 1.1,
-        letterSpacing: -0.5,
-      ),
-      headlineMedium: display.headlineMedium?.copyWith(
-        fontSize: 24,
-        fontWeight: FontWeight.w700,
-        color: AppColors.ink,
-        letterSpacing: -0.3,
-      ),
-      titleMedium: body.titleMedium?.copyWith(
-        fontSize: 16,
-        fontWeight: FontWeight.w700,
-        color: AppColors.ink,
-      ),
-      bodyLarge: body.bodyLarge?.copyWith(fontSize: 15, color: AppColors.ink),
-      bodyMedium: body.bodyMedium?.copyWith(fontSize: 14, color: AppColors.inkMuted),
-      labelLarge: body.labelLarge?.copyWith(
-        fontSize: 14,
-        fontWeight: FontWeight.w700,
-        color: AppColors.cream,
-      ),
+      headlineLarge: display(32, FontWeight.w700, letterSpacing: -0.5, height: 1.1),
+      headlineMedium: display(24, FontWeight.w700, letterSpacing: -0.3),
+      titleMedium: body(16, FontWeight.w700, AppColors.ink),
+      bodyLarge: body(15, FontWeight.w500, AppColors.ink),
+      bodyMedium: body(14, FontWeight.w500, AppColors.inkMuted),
+      labelLarge: body(14, FontWeight.w700, AppColors.cream),
     );
   }
 
@@ -115,7 +119,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(AppRadius.button),
           ),
           elevation: 0,
-          textStyle: GoogleFonts.manrope(fontSize: 16, fontWeight: FontWeight.w700),
+          textStyle: GoogleFonts.getFont('Manrope', fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -126,7 +130,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.button),
           ),
-          textStyle: GoogleFonts.manrope(fontSize: 16, fontWeight: FontWeight.w700),
+          textStyle: GoogleFonts.getFont('Manrope', fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -145,8 +149,8 @@ class AppTheme {
           borderSide: const BorderSide(color: AppColors.marigold, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-        hintStyle: GoogleFonts.manrope(color: AppColors.inkMuted),
-        labelStyle: GoogleFonts.manrope(color: AppColors.inkMuted),
+        hintStyle: GoogleFonts.getFont('Manrope', color: AppColors.inkMuted),
+        labelStyle: GoogleFonts.getFont('Manrope', color: AppColors.inkMuted),
       ),
       cardTheme: CardThemeData(
         color: AppColors.surface,
@@ -159,18 +163,16 @@ class AppTheme {
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.surface,
         side: const BorderSide(color: AppColors.border),
-        labelStyle: GoogleFonts.manrope(fontSize: 13, color: AppColors.inkMuted),
+        labelStyle: GoogleFonts.getFont('Manrope', fontSize: 13, color: AppColors.inkMuted),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: AppColors.surface,
         indicatorColor: AppColors.marigold.withOpacity(0.18),
         labelTextStyle: WidgetStateProperty.all(
-          GoogleFonts.manrope(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.forest),
+          GoogleFonts.getFont('Manrope', fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.forest),
         ),
       ),
     );
   }
-  
-  static get GoogleFonts => null;
 }
