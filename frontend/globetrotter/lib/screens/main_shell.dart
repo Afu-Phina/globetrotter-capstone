@@ -5,6 +5,7 @@ import 'destinations_screen.dart';
 import 'itineraries_screen.dart';
 import 'recommendations_screen.dart';
 import 'login_screen.dart';
+import 'my_bookings_screen.dart';
 
 /// Bottom-nav shell shown after login: Explore, Itineraries, For You, Profile.
 class MainShell extends StatefulWidget {
@@ -69,6 +70,18 @@ class _ProfileScreen extends StatelessWidget {
             Text(user?.name ?? '', style: Theme.of(context).textTheme.headlineMedium),
             Text(user?.email ?? '', style: Theme.of(context).textTheme.bodyMedium),
             const SizedBox(height: AppSpacing.xl),
+            Card(
+              margin: EdgeInsets.zero,
+              child: ListTile(
+                leading: const Icon(Icons.event_available_outlined, color: AppColors.forest),
+                title: const Text('My Bookings'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const MyBookingsScreen()),
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.lg),
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(

@@ -1,0 +1,119 @@
+[
+  {
+    "id": "rev-001",
+    "destination_id": "dest-001",
+    "user_id": null,
+    "author_name": "Aminatou",
+    "rating": 5,
+    "comment": "The gorillas were amazing and the guides really know their animals.",
+    "created_at": "2026-05-02T10:00:00+00:00"
+  },
+  {
+    "id": "rev-002",
+    "destination_id": "dest-001",
+    "user_id": null,
+    "author_name": "Paul E.",
+    "rating": 4,
+    "comment": "Great for kids but go early, it gets crowded by midday.",
+    "created_at": "2026-05-10T14:00:00+00:00"
+  },
+  {
+    "id": "rev-003",
+    "destination_id": "dest-002",
+    "user_id": null,
+    "author_name": "Brenda",
+    "rating": 5,
+    "comment": "The view from the top of the spiral is worth the walk up.",
+    "created_at": "2026-04-18T09:00:00+00:00"
+  },
+  {
+    "id": "rev-004",
+    "destination_id": "dest-002",
+    "user_id": null,
+    "author_name": "Serge K.",
+    "rating": 5,
+    "comment": "A must-see landmark, especially at sunset.",
+    "created_at": "2026-05-01T17:00:00+00:00"
+  },
+  {
+    "id": "rev-005",
+    "destination_id": "dest-003",
+    "user_id": null,
+    "author_name": "Nadine",
+    "rating": 4,
+    "comment": "Bring cash and be ready to negotiate. Incredible variety of stalls.",
+    "created_at": "2026-03-22T11:00:00+00:00"
+  },
+  {
+    "id": "rev-006",
+    "destination_id": "dest-003",
+    "user_id": null,
+    "author_name": "Tobias M.",
+    "rating": 4,
+    "comment": "Chaotic but fun. The food stalls near the entrance are excellent.",
+    "created_at": "2026-04-05T13:00:00+00:00"
+  },
+  {
+    "id": "rev-007",
+    "destination_id": "dest-004",
+    "user_id": null,
+    "author_name": "Christelle",
+    "rating": 5,
+    "comment": "Peaceful spot in the middle of the city, beautiful architecture.",
+    "created_at": "2026-02-14T08:00:00+00:00"
+  },
+  {
+    "id": "rev-008",
+    "destination_id": "dest-005",
+    "user_id": null,
+    "author_name": "Herve",
+    "rating": 5,
+    "comment": "Best sunset view in Yaoundé, the hike up is moderate.",
+    "created_at": "2026-03-01T16:00:00+00:00"
+  },
+  {
+    "id": "rev-009",
+    "destination_id": "dest-005",
+    "user_id": null,
+    "author_name": "Lisa A.",
+    "rating": 4,
+    "comment": "Beautiful views, though the trail could use better signage.",
+    "created_at": "2026-04-12T15:00:00+00:00"
+  },
+  {
+    "id": "rev-010",
+    "destination_id": "dest-006",
+    "user_id": null,
+    "author_name": "Jonas",
+    "rating": 4,
+    "comment": "Great restaurants, good spot for an evening out.",
+    "created_at": "2026-03-19T19:00:00+00:00"
+  },
+  {
+    "id": "rev-011",
+    "destination_id": "dest-007",
+    "user_id": null,
+    "author_name": "Marceline",
+    "rating": 4,
+    "comment": "Small but well curated, the royal regalia section stood out.",
+    "created_at": "2026-02-28T12:00:00+00:00"
+  },
+  {
+    "id": "rev-012",
+    "destination_id": "dest-008",
+    "user_id": null,
+    "author_name": "Didier",
+    "rating": 4,
+    "comment": "Great for authentic local food away from the touristy spots.",
+    "created_at": "2026-04-25T18:00:00+00:00"
+  },
+  {
+    "id": "049afb84-2a4e-4318-a69c-eee7e4213092",
+    "destination_id": "dest-002",
+    "user_id": "e225dd8e-e0bb-4793-ac7f-20bf3dafbaeb",
+    "author_name": "Afu",
+    "rating": 5,
+    "comment": "Loved the view!",
+    "created_at": "2026-07-25T02:39:26.988420+00:00"
+  }
+]

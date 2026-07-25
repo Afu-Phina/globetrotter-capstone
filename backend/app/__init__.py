@@ -28,11 +28,13 @@ def create_app():
     from app.routes.destinations import destinations_bp
     from app.routes.itineraries import itineraries_bp
     from app.routes.recommendations import recommendations_bp
+    from app.routes.visits import visits_bp
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(destinations_bp, url_prefix="/api/destinations")
     app.register_blueprint(itineraries_bp, url_prefix="/api/itineraries")
     app.register_blueprint(recommendations_bp, url_prefix="/api/recommendations")
+    app.register_blueprint(visits_bp, url_prefix="/api/visits")
 
     @app.route("/api/health")
     def health():

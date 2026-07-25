@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../models/destination.dart';
+import 'rating_stars.dart';
 
 /// Category -> (icon, cover gradient). Since Phase 1 has no image hosting,
 /// this stands in for a photo: a rich, category-specific gradient tile
@@ -121,6 +122,12 @@ class _DestinationGridCardState extends State<DestinationGridCard> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 12),
+                    ),
+                    const SizedBox(height: 4),
+                    RatingStars(
+                      averageRating: widget.destination.averageRating,
+                      reviewCount: widget.destination.reviewCount,
+                      size: 11,
                     ),
                   ],
                 ),
