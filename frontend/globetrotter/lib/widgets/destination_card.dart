@@ -30,10 +30,10 @@ class DestinationCard extends StatelessWidget {
                 width: 56,
                 height: 56,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.forest.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(Icons.place, color: AppColors.primary),
+                child: const Icon(Icons.place, color: AppColors.forest),
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(
@@ -59,8 +59,8 @@ class DestinationCard extends StatelessWidget {
                       children: destination.tags
                           .map((tag) => Chip(
                                 label: Text(tag, style: const TextStyle(fontSize: 11)),
-                                backgroundColor: AppColors.secondary.withOpacity(0.1),
-                                labelStyle: const TextStyle(color: AppColors.secondary),
+                                backgroundColor: AppColors.papaya.withOpacity(0.1),
+                                labelStyle: const TextStyle(color: AppColors.papaya),
                                 padding: EdgeInsets.zero,
                                 visualDensity: VisualDensity.compact,
                                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

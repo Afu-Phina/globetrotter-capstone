@@ -46,7 +46,7 @@ class _ItinerariesScreenState extends State<ItinerariesScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('My Itineraries')),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.forest,
         onPressed: () async {
           final created = await Navigator.of(context).push<bool>(
             MaterialPageRoute(builder: (_) => const ItineraryFormScreen()),
@@ -66,7 +66,7 @@ class _ItinerariesScreenState extends State<ItinerariesScreen> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.map_outlined, size: 48, color: AppColors.textSecondary),
+                            const Icon(Icons.map_outlined, size: 48, color: AppColors.inkMuted),
                             const SizedBox(height: AppSpacing.md),
                             Text(
                               'No itineraries yet.\nAdd destinations from Explore to start one.',
@@ -91,7 +91,7 @@ class _ItinerariesScreenState extends State<ItinerariesScreen> {
                               contentPadding: const EdgeInsets.all(AppSpacing.md),
                               leading: Icon(
                                 isShared ? Icons.people_alt : Icons.map,
-                                color: AppColors.primary,
+                                color: AppColors.forest,
                               ),
                               title: Text(itinerary.title),
                               subtitle: Text(

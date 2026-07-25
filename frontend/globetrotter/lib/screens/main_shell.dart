@@ -32,7 +32,7 @@ class _MainShellState extends State<MainShell> {
         selectedIndex: _index,
         onDestinationSelected: (i) => setState(() => _index = i),
         backgroundColor: AppColors.surface,
-        indicatorColor: AppColors.primary.withOpacity(0.15),
+        indicatorColor: AppColors.forest.withOpacity(0.15),
         destinations: const [
           NavigationDestination(icon: Icon(Icons.explore_outlined), selectedIcon: Icon(Icons.explore), label: 'Explore'),
           NavigationDestination(icon: Icon(Icons.map_outlined), selectedIcon: Icon(Icons.map), label: 'Itineraries'),
@@ -59,10 +59,10 @@ class _ProfileScreen extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 32,
-              backgroundColor: AppColors.primary.withOpacity(0.15),
+              backgroundColor: AppColors.forest.withOpacity(0.15),
               child: Text(
                 (user?.name ?? '?').substring(0, 1).toUpperCase(),
-                style: const TextStyle(fontSize: 28, color: AppColors.primary),
+                style: const TextStyle(fontSize: 28, color: AppColors.forest),
               ),
             ),
             const SizedBox(height: AppSpacing.md),

@@ -149,7 +149,7 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                   (d) => Card(
                     margin: const EdgeInsets.only(bottom: AppSpacing.sm),
                     child: ListTile(
-                      leading: const Icon(Icons.place, color: AppColors.primary),
+                      leading: const Icon(Icons.place, color: AppColors.forest),
                       title: Text(d.name),
                       subtitle: Text(d.neighborhood),
                     ),

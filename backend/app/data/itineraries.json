@@ -1,15 +1,1 @@
-[
-  {
-    "id": "90483521-a2bc-494d-8846-d8083a5fbdb3",
-    "owner_id": "cfe58de3-28b6-42d9-ab34-2592c8fb6755",
-    "title": "Monument de la Réunification trip",
-    "start_date": null,
-    "end_date": null,
-    "destination_ids": [
-      "dest-002"
-    ],
-    "notes": "",
-    "shared_with": [],
-    "created_at": "2026-07-25T00:25:16.144292+00:00"
-  }
-]
+[]

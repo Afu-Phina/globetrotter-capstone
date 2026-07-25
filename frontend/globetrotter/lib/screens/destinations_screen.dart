@@ -113,9 +113,9 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                     setState(() => _selectedCategory = category);
                     _load();
                   },
-                  selectedColor: AppColors.primary.withOpacity(0.15),
+                  selectedColor: AppColors.forest.withOpacity(0.15),
                   labelStyle: TextStyle(
-                    color: selected ? AppColors.primary : AppColors.textSecondary,
+                    color: selected ? AppColors.forest : AppColors.inkMuted,
                     fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
                   ),
                 );
@@ -143,7 +143,7 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                                   destination: destination,
                                   trailing: IconButton(
                                     icon: const Icon(Icons.add_circle_outline),
-                                    color: AppColors.primary,
+                                    color: AppColors.forest,
                                     onPressed: () => _showAddToItinerarySheet(destination),
                                   ),
                                 );
@@ -221,7 +221,7 @@ class _AddToItinerarySheetState extends State<_AddToItinerarySheet> {
               ),
             const Divider(),
             ListTile(
-              leading: const Icon(Icons.add, color: AppColors.primary),
+              leading: const Icon(Icons.add, color: AppColors.forest),
               title: const Text('Create new itinerary'),
               onTap: _createNew,
             ),
