@@ -3,6 +3,7 @@ import '../theme/app_theme.dart';
 import '../services/auth_service.dart';
 import '../services/api_service.dart';
 import '../widgets/hill_clipper.dart';
+import '../utils/page_transitions.dart';
 import 'register_screen.dart';
 import 'main_shell.dart';
 
@@ -31,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await authService.login(_emailController.text.trim(), _passwordController.text);
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const MainShell()),
+        fadeSlideRoute(const MainShell()),
       );
     } on ApiException catch (e) {
       setState(() => _error = e.message);

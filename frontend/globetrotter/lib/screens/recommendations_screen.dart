@@ -3,6 +3,8 @@ import '../theme/app_theme.dart';
 import '../services/itineraries_service.dart';
 import '../models/destination.dart';
 import '../widgets/destination_card.dart';
+import '../widgets/shimmer_loading.dart';
+import '../widgets/staggered_list_item.dart';
 
 class RecommendationsScreen extends StatefulWidget {
   const RecommendationsScreen({super.key});
@@ -42,7 +44,11 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('For You')),
       body: _loading
-          ? const Center(child: CircularProgressIndicator())
+          ? ListView.builder(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              itemCount: 4,
+              itemBuilder: (_, __) => const DestinationCardShimmer(),
+            )
           : _error != null
               ? Center(child: Text(_error!))
               : RefreshIndicator(
@@ -50,14 +56,36 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                   child: ListView(
                     padding: const EdgeInsets.all(AppSpacing.md),
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.md),
-                        child: Text(
-                          'Based on your itineraries and popular spots in Yaoundé',
-                          style: Theme.of(context).textTheme.bodyMedium,
+                      Container(
+                        padding: const EdgeInsets.all(AppSpacing.md),
+                        margin: const EdgeInsets.only(bottom: AppSpacing.md),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [AppColors.forest, AppColors.forestMid],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(AppRadius.card),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.auto_awesome, color: AppColors.marigoldLight),
+                            const SizedBox(width: AppSpacing.sm),
+                            Expanded(
+                              child: Text(
+                                'Picked from your itineraries and what\'s popular in Yaoundé',
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.cream),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      ..._recommendations.map((d) => DestinationCard(destination: d)),
+                      ..._recommendations.asMap().entries.map(
+                            (entry) => StaggeredListItem(
+                              index: entry.key,
+                              child: DestinationCard(destination: entry.value),
+                            ),
+                          ),
                     ],
                   ),
                 ),

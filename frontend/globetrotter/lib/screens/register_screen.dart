@@ -3,6 +3,7 @@ import '../theme/app_theme.dart';
 import '../services/auth_service.dart';
 import '../services/api_service.dart';
 import '../widgets/hill_clipper.dart';
+import '../utils/page_transitions.dart';
 import 'main_shell.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -35,7 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const MainShell()),
+        fadeSlideRoute(const MainShell()),
       );
     } on ApiException catch (e) {
       setState(() => _error = e.message);
