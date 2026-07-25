@@ -14,7 +14,7 @@ class GlobeTrotterApp extends StatelessWidget {
     return MaterialApp(
       title: 'GlobeTrotter Yaoundé',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
+      theme: AppTheme.theme,
       home: const LoginScreen(),
     );
   }

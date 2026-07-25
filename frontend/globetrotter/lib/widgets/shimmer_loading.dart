@@ -51,16 +51,16 @@ class _ShimmerBoxState extends State<ShimmerBox> with SingleTickerProviderStateM
                 begin: Alignment(-1.5 + _controller.value * 3, 0),
                 end: Alignment(-0.5 + _controller.value * 3, 0),
                 colors: const [
-                  Color(0xFFE9EEE5),
-                  Color(0xFFF6F8F3),
-                  Color(0xFFE9EEE5),
+                  Color(0xFF1B2820),
+                  Color(0xFF283B2F),
+                  Color(0xFF1B2820),
                 ],
               ).createShader(bounds);
             },
             child: Container(
               height: widget.height,
               width: widget.width ?? double.infinity,
-              color: const Color(0xFFE9EEE5),
+              color: const Color(0xFF1B2820),
             ),
           ),
         );

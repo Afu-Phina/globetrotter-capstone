@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               HillHero(
                 height: 300,
-                gradientColors: const [AppColors.forestDeep, AppColors.forest, AppColors.forestMid],
+                gradientColors: const [AppColors.forestDeep, AppColors.forestMid],
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.xl, AppSpacing.lg, 0),
                   child: Column(
