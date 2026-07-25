@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// Removed google_fonts dependency to avoid missing package error.
 
 /// GlobeTrotter design system — "Seven Hills at Golden Hour".
 ///
@@ -171,4 +171,6 @@ class AppTheme {
       ),
     );
   }
+  
+  static get GoogleFonts => null;
 }
