@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'base_url_web.dart' if (dart.library.io) 'base_url_io.dart' as platform_url;
 
 /// Single place that knows how to talk to the Flask backend.
 ///
@@ -8,9 +9,12 @@ import 'package:http/http.dart' as http;
 /// "attach the JWT token" step. Putting it here means screens just call
 /// ApiService.get('/destinations') and don't repeat that plumbing.
 class ApiService {
-  // Android emulator reaches the host machine's localhost via 10.0.2.2.
-  // iOS simulator / web can use localhost directly.
-  static const String baseUrl = '  http://172.20.10.2:5000/api';
+  // Resolved per-platform: 10.0.2.2 on the Android emulator, 127.0.0.1
+  // everywhere else (web, iOS simulator, desktop). See base_url_io.dart /
+  // base_url_web.dart. If you're testing on a REAL physical device
+  // instead of an emulator/simulator, neither of these will work --
+  // replace with your computer's LAN IP (e.g. 'http://192.168.1.42:5000/api').
+  static final String baseUrl = platform_url.resolveBaseUrl();
 
   String? _authToken;
 
