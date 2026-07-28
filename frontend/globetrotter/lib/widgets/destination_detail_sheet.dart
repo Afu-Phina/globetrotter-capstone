@@ -84,7 +84,13 @@ class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
 
   Future<void> _openInMaps() async {
     final query = Uri.encodeComponent('${widget.destination.name}, Yaoundé, Cameroon');
-    final uri = Uri.parse('https://www.google.com/maps/search/?api=1&query=$query');
+    // "dir" (directions) mode instead of "search": leaving origin blank tells
+    // Maps to use the device's current location automatically, so it opens
+    // showing the route and estimated travel time to get there -- not just
+    // a pin on the map.
+    final uri = Uri.parse(
+      'https://www.google.com/maps/dir/?api=1&destination=$query&travelmode=driving',
+    );
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else if (mounted) {
@@ -220,8 +226,8 @@ class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
               const SizedBox(height: AppSpacing.md),
               OutlinedButton.icon(
                 onPressed: _openInMaps,
-                icon: const Icon(Icons.map_outlined, size: 16),
-                label: const Text('Open in Maps'),
+                icon: const Icon(Icons.directions, size: 16),
+                label: const Text('Get Directions'),
               ),
 
               const SizedBox(height: AppSpacing.lg),
