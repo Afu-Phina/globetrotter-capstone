@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../models/destination.dart';
 import 'rating_stars.dart';
+import 'destination_image.dart';
 
 /// Category -> (icon, cover gradient). Since Phase 1 has no image hosting,
 /// this stands in for a photo: a rich, category-specific gradient tile
@@ -66,27 +67,21 @@ class _DestinationGridCardState extends State<DestinationGridCard> {
                   children: [
                     if (widget.destination.imageUrl != null)
                       Positioned.fill(
-                        child: Image.network(
-                          widget.destination.imageUrl!,
-                          fit: BoxFit.cover,
-                          loadingBuilder: (context, child, progress) =>
-                              progress == null ? child : Container(color: style.gradient.first),
-                          errorBuilder: (context, error, stackTrace) {
-                            // ignore: avoid_print
-                            print('[image load failed] ${widget.destination.name}: ${widget.destination.imageUrl} -> $error');
-                            return Container(
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: style.gradient,
-                                ),
+                        child: DestinationImage(
+                          source: widget.destination.imageUrl!,
+                          debugLabel: widget.destination.name,
+                          fallback: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: style.gradient,
                               ),
-                              child: Center(
-                                child: Icon(style.icon, color: Colors.white.withOpacity(0.85), size: 44),
-                              ),
-                            );
-                          },
+                            ),
+                            child: Center(
+                              child: Icon(style.icon, color: Colors.white.withOpacity(0.85), size: 44),
+                            ),
+                          ),
                         ),
                       )
                     else

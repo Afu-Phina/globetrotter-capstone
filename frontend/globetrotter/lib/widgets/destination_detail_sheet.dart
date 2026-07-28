@@ -8,6 +8,7 @@ import '../services/destinations_service.dart';
 import 'rating_stars.dart';
 import 'ask_question_widget.dart';
 import 'guided_visit_form.dart';
+import 'destination_image.dart';
 
 /// Full "place details" sheet -- description, tags, rating/reviews, an
 /// ask-a-question FAQ, a guided-visit booking form, an "open in maps"
@@ -141,10 +142,10 @@ class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
                     children: [
                       AspectRatio(
                         aspectRatio: 16 / 9,
-                        child: Image.network(
-                          d.imageUrl!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
+                        child: DestinationImage(
+                          source: d.imageUrl!,
+                          debugLabel: d.name,
+                          fallback: Container(
                             color: AppColors.surface,
                             child: const Center(
                               child: Icon(Icons.image_not_supported_outlined, color: AppColors.inkMuted),
