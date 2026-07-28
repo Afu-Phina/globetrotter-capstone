@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 import '../services/destinations_service.dart';
 import '../services/auth_service.dart';
@@ -108,6 +109,25 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
       backgroundColor: Colors.transparent,
       builder: (_) => DestinationDetailSheet(destination: destination),
     );
+  }
+
+  /// Handoff to Maps for a place typed in search that isn't in our curated
+  /// destinations.json. This is NOT a real citywide search (that would need
+  /// a Google Places API key we don't have) -- it just opens directions to
+  /// whatever text the person typed, same as the "Get Directions" button
+  /// on a known destination's detail page.
+  Future<void> _getDirectionsToSearch(String query) async {
+    final encoded = Uri.encodeComponent('$query, Yaoundé, Cameroon');
+    final uri = Uri.parse(
+      'https://www.google.com/maps/dir/?api=1&destination=$encoded&travelmode=driving',
+    );
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Could not open Maps.')),
+      );
+    }
   }
 
   @override
@@ -232,6 +252,20 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
+                              if (_searchController.text.trim().isNotEmpty) ...[
+                                const SizedBox(height: AppSpacing.lg),
+                                Text(
+                                  "Not in our curated list yet? You can still get directions.",
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                const SizedBox(height: AppSpacing.sm),
+                                OutlinedButton.icon(
+                                  onPressed: () => _getDirectionsToSearch(_searchController.text.trim()),
+                                  icon: const Icon(Icons.directions, size: 16),
+                                  label: Text('Get Directions to "${_searchController.text.trim()}"'),
+                                ),
+                              ],
                             ],
                           ),
                         ),
