@@ -132,7 +132,7 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Karibu, $userName 👋',
+                          'Welcome, $userName 👋',
                           style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: AppColors.cream),
                         ),
                         const SizedBox(height: 4),
