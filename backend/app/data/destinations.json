@@ -174,7 +174,7 @@
       "outdoors"
     ],
     "popularity": 48,
-    "image_url": null,
+    "image_url": "/static/images/yaounde_golf_club.png",
     "image_attribution": null
   },
   {
@@ -276,7 +276,7 @@
       "local life"
     ],
     "popularity": 49,
-    "image_url": null,
+    "image_url": "/static/images/nsam_market.png",
     "image_attribution": null
   },
   {
