@@ -1,13 +1,1 @@
-[
-  {
-    "id": "dd04bb42-26b9-4d1e-a212-0f97f85e9ee8",
-    "user_id": "254779a4-a41e-4bcd-a96a-24e951ad1afe",
-    "destination_id": "dest-003",
-    "destination_name": "Marche Central (Mfoundi Market)",
-    "date": "2026-07-26",
-    "time": "10:00",
-    "num_people": 2,
-    "status": "confirmed",
-    "created_at": "2026-07-25T03:16:50.716692+00:00"
-  }
-]
+[]

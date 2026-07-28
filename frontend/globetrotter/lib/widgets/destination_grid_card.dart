@@ -20,10 +20,11 @@ const Map<String, _CoverStyle> _coverStyles = {
   'Nature & Views': _CoverStyle(Icons.terrain_rounded, [Color(0xFF15352A), Color(0xFF3E7A61)]),
   'Nightlife & Dining': _CoverStyle(Icons.local_bar_rounded, [Color(0xFF6A2F5B), Color(0xFFA35C90)]),
   'Local Life': _CoverStyle(Icons.groups_rounded, [Color(0xFFC97F1E), Color(0xFFF0A93D)]),
+  'Sports & Recreation': _CoverStyle(Icons.sports_soccer_rounded, [Color(0xFF1F5C6B), Color(0xFF4D96A8)]),
 };
 
 _CoverStyle _styleFor(String category) =>
-    _coverStyles[category] ?? const _CoverStyle(Icons.place_rounded, [AppColors.forest, AppColors.forestMid]);
+    _coverStyles[category] ?? const _CoverStyle(Icons.place_rounded, [AppColors.forestDeep, AppColors.forestMid]);
 
 class DestinationGridCard extends StatefulWidget {
   final Destination destination;
@@ -63,18 +64,40 @@ class _DestinationGridCardState extends State<DestinationGridCard> {
                 aspectRatio: 1.3,
                 child: Stack(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: style.gradient,
+                    if (widget.destination.imageUrl != null)
+                      Positioned.fill(
+                        child: Image.network(
+                          widget.destination.imageUrl!,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, progress) =>
+                              progress == null ? child : Container(color: style.gradient.first),
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: style.gradient,
+                              ),
+                            ),
+                            child: Center(
+                              child: Icon(style.icon, color: Colors.white.withOpacity(0.85), size: 44),
+                            ),
+                          ),
+                        ),
+                      )
+                    else
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: style.gradient,
+                          ),
+                        ),
+                        child: Center(
+                          child: Icon(style.icon, color: Colors.white.withOpacity(0.85), size: 44),
                         ),
                       ),
-                      child: Center(
-                        child: Icon(style.icon, color: Colors.white.withOpacity(0.85), size: 44),
-                      ),
-                    ),
                     if (widget.destination.popularity >= 85)
                       Positioned(
                         top: 8,

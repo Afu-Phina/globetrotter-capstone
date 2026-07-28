@@ -35,11 +35,15 @@ const Map<String, _CategoryStyle> _categoryStyles = {
     Icons.groups_rounded,
     [Color(0xFFF0A93D), Color(0xFFF8D48A)],
   ),
+  'Sports & Recreation': _CategoryStyle(
+    Icons.sports_soccer_rounded,
+    [Color(0xFF1F5C6B), Color(0xFF4D96A8)],
+  ),
 };
 
 _CategoryStyle _styleFor(String category) =>
     _categoryStyles[category] ?? const _CategoryStyle(Icons.place_rounded, [
-      AppColors.forest,
+      AppColors.forestDeep,
       AppColors.forestMid,
     ]);
 

@@ -61,7 +61,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                         margin: const EdgeInsets.only(bottom: AppSpacing.md),
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
-                            colors: [AppColors.forest, AppColors.forestMid],
+                            colors: [AppColors.forestDeep, AppColors.forestMid],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),

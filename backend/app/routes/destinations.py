@@ -27,6 +27,7 @@ def list_destinations():
     GET /api/destinations
     GET /api/destinations?q=market            -> text search (name/description/tags)
     GET /api/destinations?category=Nature      -> filter by category
+    GET /api/destinations?limit=8&offset=0     -> pagination, for "Load More"
     """
     destinations = read_all("destinations")
 
@@ -47,7 +48,23 @@ def list_destinations():
     # Default ordering: most popular first.
     destinations.sort(key=lambda d: d.get("popularity", 0), reverse=True)
 
-    return jsonify([_with_rating(d) for d in destinations]), 200
+    try:
+        offset = max(int(request.args.get("offset", 0)), 0)
+    except ValueError:
+        offset = 0
+    try:
+        limit = int(request.args["limit"]) if "limit" in request.args else None
+    except ValueError:
+        limit = None
+
+    total = len(destinations)
+    if limit is not None:
+        destinations = destinations[offset:offset + limit]
+    elif offset:
+        destinations = destinations[offset:]
+
+    with_ratings = [_with_rating(d) for d in destinations]
+    return jsonify({"items": with_ratings, "total": total}), 200
 
 
 @destinations_bp.route("/<destination_id>", methods=["GET"])

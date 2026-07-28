@@ -88,7 +88,7 @@ class _ItineraryFormScreenState extends State<ItineraryFormScreen> {
                       ? const SizedBox(
                           height: 20,
                           width: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.forestDeep),
                         )
                       : Text(isEditing ? 'Save Changes' : 'Create Itinerary'),
                 ),

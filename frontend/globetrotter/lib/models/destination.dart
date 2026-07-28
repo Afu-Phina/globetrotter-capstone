@@ -8,6 +8,11 @@ class Destination {
   final int popularity;
   final double? averageRating;
   final int reviewCount;
+  // Optional real photo URL. Null for every seeded destination right now
+  // (Phase 1 has no image hosting) -- the UI falls back to a gradient
+  // cover tile when this is absent, rather than showing a fake photo.
+  // Set this in destinations.json to have a real photo appear instead.
+  final String? imageUrl;
 
   Destination({
     required this.id,
@@ -19,6 +24,7 @@ class Destination {
     required this.popularity,
     this.averageRating,
     this.reviewCount = 0,
+    this.imageUrl,
   });
 
   factory Destination.fromJson(Map<String, dynamic> json) {
@@ -32,6 +38,7 @@ class Destination {
       popularity: json['popularity'] ?? 0,
       averageRating: (json['average_rating'] as num?)?.toDouble(),
       reviewCount: json['review_count'] ?? 0,
+      imageUrl: json['image_url'],
     );
   }
 }

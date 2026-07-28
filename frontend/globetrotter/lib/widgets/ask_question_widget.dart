@@ -89,8 +89,9 @@ class _AskQuestionWidgetState extends State<AskQuestionWidget> {
                             child: Text(
                               m.text,
                               style: TextStyle(
-                                color: m.isUser ? AppColors.cream : AppColors.ink,
+                                color: m.isUser ? AppColors.forestDeep : AppColors.ink,
                                 fontSize: 13,
+                                fontWeight: m.isUser ? FontWeight.w600 : FontWeight.normal,
                               ),
                             ),
                           ),

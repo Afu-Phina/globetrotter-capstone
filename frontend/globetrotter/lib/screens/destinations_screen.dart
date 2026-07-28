@@ -20,9 +20,13 @@ class DestinationsScreen extends StatefulWidget {
 class _DestinationsScreenState extends State<DestinationsScreen> {
   final _searchController = TextEditingController();
   List<Destination> _destinations = [];
+  int _total = 0;
   bool _loading = true;
+  bool _loadingMore = false;
   String? _error;
   Timer? _debounce;
+
+  static const _pageSize = 8;
 
   static const _categories = [
     'All',
@@ -31,6 +35,7 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
     'Markets & Shopping',
     'Nature & Views',
     'Nightlife & Dining',
+    'Sports & Recreation',
     'Local Life',
   ];
   String _selectedCategory = 'All';
@@ -47,15 +52,40 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
       _error = null;
     });
     try {
-      final results = await destinationsService.list(
+      final page = await destinationsService.list(
         query: _searchController.text.trim(),
         category: _selectedCategory == 'All' ? null : _selectedCategory,
+        limit: _pageSize,
       );
-      setState(() => _destinations = results);
+      setState(() {
+        _destinations = page.items;
+        _total = page.total;
+      });
     } catch (e) {
       setState(() => _error = 'Could not load destinations. Check your connection.');
     } finally {
       setState(() => _loading = false);
+    }
+  }
+
+  Future<void> _loadMore() async {
+    if (_loadingMore || _destinations.length >= _total) return;
+    setState(() => _loadingMore = true);
+    try {
+      final page = await destinationsService.list(
+        query: _searchController.text.trim(),
+        category: _selectedCategory == 'All' ? null : _selectedCategory,
+        limit: _pageSize,
+        offset: _destinations.length,
+      );
+      setState(() {
+        _destinations = [..._destinations, ...page.items];
+        _total = page.total;
+      });
+    } catch (e) {
+      // Silent -- the user can just tap "Load More Places" again.
+    } finally {
+      setState(() => _loadingMore = false);
     }
   }
 
@@ -83,6 +113,7 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
   @override
   Widget build(BuildContext context) {
     final userName = authService.currentUser?.name.split(' ').first ?? 'there';
+    final hasMore = _destinations.length < _total;
 
     return Scaffold(
       backgroundColor: AppColors.mist,
@@ -207,30 +238,65 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                       )
                     : RefreshIndicator(
                         onRefresh: _load,
-                        child: GridView.builder(
-                          padding: const EdgeInsets.fromLTRB(
-                            AppSpacing.md,
-                            0,
-                            AppSpacing.md,
-                            AppSpacing.lg,
-                          ),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: AppSpacing.md,
-                            crossAxisSpacing: AppSpacing.md,
-                            childAspectRatio: 0.78,
-                          ),
-                          itemCount: _destinations.length,
-                          itemBuilder: (context, index) {
-                            final destination = _destinations[index];
-                            return StaggeredListItem(
-                              index: index,
-                              child: DestinationGridCard(
-                                destination: destination,
-                                onTap: () => _openDetail(destination),
+                        child: CustomScrollView(
+                          slivers: [
+                            SliverPadding(
+                              padding: const EdgeInsets.fromLTRB(
+                                AppSpacing.md,
+                                0,
+                                AppSpacing.md,
+                                AppSpacing.md,
                               ),
-                            );
-                          },
+                              sliver: SliverGrid(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: AppSpacing.md,
+                                  crossAxisSpacing: AppSpacing.md,
+                                  childAspectRatio: 0.78,
+                                ),
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                    final destination = _destinations[index];
+                                    return StaggeredListItem(
+                                      index: index % _pageSize,
+                                      child: DestinationGridCard(
+                                        destination: destination,
+                                        onTap: () => _openDetail(destination),
+                                      ),
+                                    );
+                                  },
+                                  childCount: _destinations.length,
+                                ),
+                              ),
+                            ),
+                            SliverToBoxAdapter(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  AppSpacing.lg,
+                                  0,
+                                  AppSpacing.lg,
+                                  AppSpacing.xl,
+                                ),
+                                child: Center(
+                                  child: hasMore
+                                      ? OutlinedButton(
+                                          onPressed: _loadingMore ? null : _loadMore,
+                                          child: _loadingMore
+                                              ? const SizedBox(
+                                                  height: 18,
+                                                  width: 18,
+                                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                                )
+                                              : const Text('Load More Places'),
+                                        )
+                                      : Text(
+                                          'That\'s every spot in Yaoundé we know about so far.',
+                                          style: Theme.of(context).textTheme.bodyMedium,
+                                        ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
       ),
