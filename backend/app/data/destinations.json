@@ -129,7 +129,7 @@
       "neighborhood"
     ],
     "popularity": 55,
-    "image_url": null,
+    "image_url": "/static/images/mvog_ada.png",
     "image_attribution": null
   },
   {
@@ -290,7 +290,7 @@
       "food"
     ],
     "popularity": 51,
-    "image_url": null,
+    "image_url": "/static/images/biyem_assi.png",
     "image_attribution": null
   },
   {
