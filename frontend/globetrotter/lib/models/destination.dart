@@ -13,6 +13,10 @@ class Destination {
   // cover tile when this is absent, rather than showing a fake photo.
   // Set this in destinations.json to have a real photo appear instead.
   final String? imageUrl;
+  // Required credit line when imageUrl is a real, licensed photo (e.g.
+  // Wikimedia Commons under CC BY-SA, which requires attribution). Null
+  // when there's no real photo.
+  final String? imageAttribution;
 
   Destination({
     required this.id,
@@ -25,6 +29,7 @@ class Destination {
     this.averageRating,
     this.reviewCount = 0,
     this.imageUrl,
+    this.imageAttribution,
   });
 
   factory Destination.fromJson(Map<String, dynamic> json) {
@@ -39,6 +44,7 @@ class Destination {
       averageRating: (json['average_rating'] as num?)?.toDouble(),
       reviewCount: json['review_count'] ?? 0,
       imageUrl: json['image_url'],
+      imageAttribution: json['image_attribution'],
     );
   }
 }

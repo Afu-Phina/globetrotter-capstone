@@ -71,18 +71,22 @@ class _DestinationGridCardState extends State<DestinationGridCard> {
                           fit: BoxFit.cover,
                           loadingBuilder: (context, child, progress) =>
                               progress == null ? child : Container(color: style.gradient.first),
-                          errorBuilder: (context, error, stackTrace) => Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: style.gradient,
+                          errorBuilder: (context, error, stackTrace) {
+                            // ignore: avoid_print
+                            print('[image load failed] ${widget.destination.name}: ${widget.destination.imageUrl} -> $error');
+                            return Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: style.gradient,
+                                ),
                               ),
-                            ),
-                            child: Center(
-                              child: Icon(style.icon, color: Colors.white.withOpacity(0.85), size: 44),
-                            ),
-                          ),
+                              child: Center(
+                                child: Icon(style.icon, color: Colors.white.withOpacity(0.85), size: 44),
+                              ),
+                            );
+                          },
                         ),
                       )
                     else

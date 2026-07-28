@@ -134,6 +134,45 @@ class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
                   ),
                 ),
               ),
+              if (d.imageUrl != null) ...[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                  child: Stack(
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: Image.network(
+                          d.imageUrl!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            color: AppColors.surface,
+                            child: const Center(
+                              child: Icon(Icons.image_not_supported_outlined, color: AppColors.inkMuted),
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (d.imageAttribution != null)
+                        Positioned(
+                          right: 6,
+                          bottom: 6,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.55),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              d.imageAttribution!,
+                              style: const TextStyle(fontSize: 9, color: Colors.white70),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+              ],
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
