@@ -1,40 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// GlobeTrotter design system — "Seven Hills at Golden Hour", dark mode.
+/// GlobeTrotter design system — "Seven Hills at Golden Hour".
 ///
-/// Same Yaoundé identity as before (forest green hills, marigold sunset,
-/// papaya market energy), rebuilt as a dark theme: near-black backgrounds,
-/// a brightened emerald accent for icons/text that stays legible against
-/// them, and marigold/papaya doing the heavy lifting for pop -- rather
-/// than switching to a generic navy+orange SaaS palette.
+/// Yaoundé is nicknamed "la ville aux sept collines" (the city of seven
+/// hills). Instead of a generic travel-app palette, this system is built
+/// from that: deep forest green (the hills), marigold gold (sunset light
+/// hitting them), and a warm papaya red (market energy, echoing the
+/// national flag without being literal). The hill silhouette itself
+/// becomes the app's one signature shape (see HillClipper).
 class AppColors {
-  // Backgrounds.
-  static const Color mist = Color(0xFF0A130F); // page background (was light, now near-black)
-  static const Color surface = Color(0xFF142018); // card / elevated surface
-  static const Color border = Color(0xFF2A3A30); // subtle seams on dark surfaces
-
-  // The hills -- kept dark, used for hero gradients and banners.
-  static const Color forestDeep = Color(0xFF07140F);
-  static const Color forestMid = Color(0xFF23503F);
-
-  // Brand accent green -- brightened from the light-theme version so it
-  // stays legible as icon/text/border color against near-black surfaces.
-  static const Color forest = Color(0xFF4FC790);
+  // The hills, at different times of day.
+  static const Color forest = Color(0xFF15352A); // primary dark surface
+  static const Color forestDeep = Color(0xFF0B211A); // gradient depth
+  static const Color forestMid = Color(0xFF285443); // mid-tone accents
 
   // Golden hour.
-  static const Color marigold = Color(0xFFF0A93D);
+  static const Color marigold = Color(0xFFF0A93D); // primary action color
   static const Color marigoldLight = Color(0xFFF8D48A);
 
   // Market energy.
-  static const Color papaya = Color(0xFFE86A50);
+  static const Color papaya = Color(0xFFE4573F); // secondary accent / alerts
+
+  // Content surfaces — a sage-tinted white, not the generic warm cream.
+  static const Color mist = Color(0xFFF5F8F2);
+  static const Color surface = Color(0xFFFFFFFF);
 
   // Text.
-  static const Color ink = Color(0xFFF3F1EA); // primary text (was near-black, now cream)
-  static const Color inkMuted = Color(0xFFA7BBAE); // secondary text
-  static const Color cream = Color(0xFFFAF6EC); // text on the darkest hero surfaces
+  static const Color ink = Color(0xFF16241D);
+  static const Color inkMuted = Color(0xFF5B6B62);
+  static const Color cream = Color(0xFFFAF6EC); // text/icons on dark surfaces
 
-  static const Color error = Color(0xFFFF6E57);
+  static const Color error = Color(0xFFC1432B);
+  static const Color border = Color(0xFFE1E8DE);
 }
 
 class AppSpacing {
@@ -53,10 +51,12 @@ class AppRadius {
 }
 
 class AppTheme {
-  // Uses GoogleFonts.getFont(name, ...) rather than the generated
-  // per-font convenience methods (e.g. bricolageGrotesqueTextTheme()),
-  // since those vary by google_fonts package version and can throw
-  // NoSuchMethodError. getFont() fetches by plain string name instead.
+  // Built with GoogleFonts.getFont(name, ...) rather than the generated
+  // per-font convenience methods (e.g. bricolageGrotesqueTextTheme()).
+  // Those generated methods vary by google_fonts package version and can
+  // throw NoSuchMethodError if a given version didn't generate one for
+  // this font. getFont() takes the font family as a plain string and
+  // fetches it directly, so it works on any recent package version.
   static TextTheme get _textTheme {
     TextStyle display(double size, FontWeight weight, {double? letterSpacing, double? height}) {
       return GoogleFonts.getFont(
@@ -84,11 +84,11 @@ class AppTheme {
       titleMedium: body(16, FontWeight.w700, AppColors.ink),
       bodyLarge: body(15, FontWeight.w500, AppColors.ink),
       bodyMedium: body(14, FontWeight.w500, AppColors.inkMuted),
-      labelLarge: body(14, FontWeight.w700, AppColors.forestDeep),
+      labelLarge: body(14, FontWeight.w700, AppColors.cream),
     );
   }
 
-  static ThemeData get theme {
+  static ThemeData get light {
     final textTheme = _textTheme;
     return ThemeData(
       useMaterial3: true,
@@ -100,7 +100,7 @@ class AppTheme {
         tertiary: AppColors.papaya,
         surface: AppColors.surface,
         error: AppColors.error,
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
       ),
       textTheme: textTheme,
       appBarTheme: AppBarTheme(
@@ -168,11 +168,13 @@ class AppTheme {
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: AppColors.surface,
-        indicatorColor: AppColors.marigold.withOpacity(0.22),
+        indicatorColor: AppColors.marigold.withOpacity(0.18),
         labelTextStyle: WidgetStateProperty.all(
           GoogleFonts.getFont('Manrope', fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.forest),
         ),
       ),
     );
   }
+
+  static ThemeData? get theme => null;
 }
