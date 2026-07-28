@@ -304,7 +304,7 @@
       "neighborhood"
     ],
     "popularity": 40,
-    "image_url": "assets/images/ngousso_neighborhood.png",
+    "image_url": "/static/images/ngousso_neighborhood.png",
     "image_attribution": null
   },
   {
@@ -319,7 +319,7 @@
       "walk"
     ],
     "popularity": 42,
-    "image_url": "assets/images/mfoundi_river_banks.png",
+    "image_url": "/static/images/mfoundi_river_banks.png",
     "image_attribution": null
   }
 ]

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import '../services/api_service.dart';
 
-/// Renders a destination's photo from either a network URL or a bundled
-/// local asset (e.g. a photo the user provided directly rather than one
-/// sourced from the web). Local assets are declared with an "assets/"
-/// prefix in destinations.json; anything else is treated as a network
-/// image. [fallback] is shown on any load failure so a bad URL never
-/// breaks the layout.
+/// Renders a destination's photo. The `source` string can be:
+///  - A full network URL (e.g. a Wikimedia Commons photo) -> loaded directly.
+///  - A path starting with "/static/" -> a photo the user provided, served
+///    by our own Flask backend from app/static/images/. Prefixed with the
+///    backend's host and loaded the same way as any other network image --
+///    this reuses the exact code path already confirmed working for the
+///    Wikimedia photos, instead of Flutter's separate asset-bundling system
+///    (which requires a full rebuild + `flutter pub get` and was proving
+///    unreliable to diagnose remotely).
+/// [fallback] is shown on any load failure so a bad path never breaks
+/// the layout.
 class DestinationImage extends StatelessWidget {
   final String source;
   final BoxFit fit;
@@ -20,29 +26,22 @@ class DestinationImage extends StatelessWidget {
     this.debugLabel,
   });
 
-  bool get _isLocalAsset => source.startsWith('assets/');
+  String get _resolvedUrl {
+    if (source.startsWith('http')) return source;
+    // Relative path served by our own backend (e.g. "/static/images/x.png").
+    return '${ApiService.mediaBaseUrl}$source';
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (_isLocalAsset) {
-      return Image.asset(
-        source,
-        fit: fit,
-        errorBuilder: (context, error, stackTrace) {
-          // ignore: avoid_print
-          print('[asset image load failed] ${debugLabel ?? ''}: $source -> $error');
-          return fallback;
-        },
-      );
-    }
-
+    final url = _resolvedUrl;
     return Image.network(
-      source,
+      url,
       fit: fit,
       loadingBuilder: (context, child, progress) => progress == null ? child : fallback,
       errorBuilder: (context, error, stackTrace) {
         // ignore: avoid_print
-        print('[network image load failed] ${debugLabel ?? ''}: $source -> $error');
+        print('[image load failed] ${debugLabel ?? ''}: $url -> $error');
         return fallback;
       },
     );

@@ -16,6 +16,11 @@ class ApiService {
   // replace with your computer's LAN IP (e.g. 'http://192.168.1.42:5000/api').
   static final String baseUrl = platform_url.resolveBaseUrl();
 
+  // Same host as baseUrl, but without the '/api' suffix -- used for
+  // static files (e.g. user-provided destination photos served from
+  // Flask's /static route) rather than JSON API calls.
+  static final String mediaBaseUrl = baseUrl.replaceAll(RegExp(r'/api$'), '');
+
   String? _authToken;
 
   void setToken(String token) => _authToken = token;
