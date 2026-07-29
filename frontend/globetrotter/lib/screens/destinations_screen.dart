@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 import '../services/destinations_service.dart';
-import '../services/auth_service.dart';
 import '../models/destination.dart';
+import '../services/auth_service.dart';
 import '../widgets/destination_grid_card.dart';
 import '../widgets/destination_detail_sheet.dart';
+import '../widgets/quick_place_sheet.dart';
 import '../widgets/hill_clipper.dart';
 import '../widgets/shimmer_loading.dart';
 import '../widgets/staggered_list_item.dart';
@@ -111,23 +111,17 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
     );
   }
 
-  /// Handoff to Maps for a place typed in search that isn't in our curated
-  /// destinations.json. This is NOT a real citywide search (that would need
-  /// a Google Places API key we don't have) -- it just opens directions to
-  /// whatever text the person typed, same as the "Get Directions" button
-  /// on a known destination's detail page.
-  Future<void> _getDirectionsToSearch(String query) async {
-    final encoded = Uri.encodeComponent('$query, Yaoundé, Cameroon');
-    final uri = Uri.parse(
-      'https://www.google.com/maps/dir/?api=1&destination=$encoded&travelmode=driving',
+  /// Opens a popup for a place typed in search that isn't in our curated
+  /// destinations.json -- styled consistently with a real destination's
+  /// popup, but honest that there's no real data behind it (see
+  /// QuickPlaceSheet).
+  void _openQuickPlace(String query) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => QuickPlaceSheet(query: query),
     );
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Could not open Maps.')),
-      );
-    }
   }
 
   @override
@@ -255,15 +249,34 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                               if (_searchController.text.trim().isNotEmpty) ...[
                                 const SizedBox(height: AppSpacing.lg),
                                 Text(
-                                  "Not in our curated list yet? You can still get directions.",
+                                  "Not in our curated list yet? Tap below to look it up.",
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                                 const SizedBox(height: AppSpacing.sm),
-                                OutlinedButton.icon(
-                                  onPressed: () => _getDirectionsToSearch(_searchController.text.trim()),
-                                  icon: const Icon(Icons.directions, size: 16),
-                                  label: Text('Get Directions to "${_searchController.text.trim()}"'),
+                                Material(
+                                  color: AppColors.surface,
+                                  borderRadius: BorderRadius.circular(AppRadius.card),
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(AppRadius.card),
+                                    onTap: () => _openQuickPlace(_searchController.text.trim()),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(AppSpacing.md),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Icon(Icons.place_outlined, color: AppColors.marigold),
+                                          const SizedBox(width: AppSpacing.sm),
+                                          Text(
+                                            '"${_searchController.text.trim()}"',
+                                            style: Theme.of(context).textTheme.titleMedium,
+                                          ),
+                                          const SizedBox(width: AppSpacing.sm),
+                                          const Icon(Icons.chevron_right, color: AppColors.inkMuted),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ],
@@ -336,4 +349,7 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
       ),
     );
   }
+}
+
+class Destination {
 }
