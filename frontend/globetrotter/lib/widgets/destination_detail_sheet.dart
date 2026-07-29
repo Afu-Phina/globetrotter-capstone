@@ -166,7 +166,7 @@ class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.55),
+                              color: Colors.black.withValues(alpha: 0.55),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
@@ -183,7 +183,7 @@ class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                  color: AppColors.forest.withOpacity(0.1),
+                  color: AppColors.forest.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -213,7 +213,7 @@ class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
                   ...d.tags.map((tag) => Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
-                          color: AppColors.papaya.withOpacity(0.1),
+                          color: AppColors.papaya.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(

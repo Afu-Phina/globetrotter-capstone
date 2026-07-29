@@ -96,7 +96,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                                       width: 44,
                                       height: 44,
                                       decoration: BoxDecoration(
-                                        color: (cancelled ? AppColors.inkMuted : AppColors.marigold).withOpacity(0.12),
+                                        color: (cancelled ? AppColors.inkMuted : AppColors.marigold).withValues(alpha: 0.12),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Icon(

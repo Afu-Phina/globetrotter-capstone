@@ -165,7 +165,7 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                   bottom: -26,
                   child: Material(
                     elevation: 6,
-                    shadowColor: Colors.black.withOpacity(0.15),
+                    shadowColor: Colors.black.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(AppRadius.card),
                     child: TextField(
                       controller: _searchController,
@@ -202,7 +202,7 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                       setState(() => _selectedCategory = category);
                       _load();
                     },
-                    selectedColor: AppColors.marigold.withOpacity(0.2),
+                    selectedColor: AppColors.marigold.withValues(alpha: 0.2),
                     labelStyle: TextStyle(
                       color: selected ? AppColors.forest : AppColors.inkMuted,
                       fontWeight: selected ? FontWeight.w700 : FontWeight.normal,
@@ -349,7 +349,4 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
       ),
     );
   }
-}
-
-class Destination {
 }

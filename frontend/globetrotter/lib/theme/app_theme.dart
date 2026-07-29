@@ -168,7 +168,7 @@ class AppTheme {
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: AppColors.surface,
-        indicatorColor: AppColors.marigold.withOpacity(0.22),
+        indicatorColor: AppColors.marigold.withValues(alpha: 0.22),
         labelTextStyle: WidgetStateProperty.all(
           GoogleFonts.getFont('Manrope', fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.forest),
         ),

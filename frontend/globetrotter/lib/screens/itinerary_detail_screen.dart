@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:globetrotter/screens/itineraries_screen.dart';
 import '../theme/app_theme.dart';
 import '../services/itineraries_service.dart';
 import '../services/destinations_service.dart';
 import '../services/auth_service.dart';
-// ignore: unused_import
 import '../models/itinerary.dart';
-// ignore: unused_import
 import '../models/destination.dart';
 import 'itinerary_form_screen.dart';
 
@@ -123,7 +120,9 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                         builder: (_) => ItineraryFormScreen(existing: _itinerary),
                       ),
                     );
-                    if (updated == true) Navigator.of(context).pop();
+                    if (updated == true && context.mounted) {
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
                 IconButton(

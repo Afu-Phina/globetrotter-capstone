@@ -72,7 +72,7 @@ class _GuidedVisitFormState extends State<GuidedVisitForm> {
       return Container(
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
-          color: AppColors.forest.withOpacity(0.06),
+          color: AppColors.forest.withValues(alpha: 0.06),
           borderRadius: BorderRadius.circular(AppRadius.card),
         ),
         child: Row(

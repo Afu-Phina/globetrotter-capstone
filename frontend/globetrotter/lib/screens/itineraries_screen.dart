@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../services/itineraries_service.dart';
 import '../services/auth_service.dart';
-// ignore: unused_import
 import '../models/itinerary.dart';
 import '../widgets/shimmer_loading.dart';
 import '../widgets/staggered_list_item.dart';
@@ -81,7 +80,7 @@ class _ItinerariesScreenState extends State<ItinerariesScreen> {
                             Container(
                               padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
-                                color: AppColors.marigold.withOpacity(0.12),
+                                color: AppColors.marigold.withValues(alpha: 0.12),
                                 shape: BoxShape.circle,
                               ),
                               child: const Icon(Icons.map_outlined, size: 40, color: AppColors.marigold),
@@ -116,7 +115,7 @@ class _ItinerariesScreenState extends State<ItinerariesScreen> {
                                   width: 44,
                                   height: 44,
                                   decoration: BoxDecoration(
-                                    color: (isShared ? AppColors.papaya : AppColors.forest).withOpacity(0.1),
+                                    color: (isShared ? AppColors.papaya : AppColors.forest).withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Icon(
@@ -124,7 +123,7 @@ class _ItinerariesScreenState extends State<ItinerariesScreen> {
                                     color: isShared ? AppColors.papaya : AppColors.forest,
                                   ),
                                 ),
-                                title: Text(itinerary.title ?? '', style: Theme.of(context).textTheme.titleMedium),
+                                title: Text(itinerary.title, style: Theme.of(context).textTheme.titleMedium),
                                 subtitle: Text(
                                   '${itinerary.destinationIds.length} stop(s)'
                                   '${isShared ? ' · Shared with you' : ''}',
@@ -144,12 +143,4 @@ class _ItinerariesScreenState extends State<ItinerariesScreen> {
                     ),
     );
   }
-}
-
-class Itinerary {
-  get ownerId => null;
-  
-  String? get title => null;
-  
-  get destinationIds => null;
 }
