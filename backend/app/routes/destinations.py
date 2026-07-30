@@ -5,6 +5,7 @@ from flask import Blueprint, request, jsonify
 
 from app.utils.storage import read_all, write_all, find_by_id
 from app.utils.auth import require_auth
+from app.utils.ai import answer_destination_question
 
 destinations_bp = Blueprint("destinations", __name__)
 
@@ -123,11 +124,10 @@ def add_review(current_user_id, destination_id):
 
 
 # ---------------------------------------------------------------------------
-# Ask a question -- rule-based FAQ, not a real AI model. Matches keywords in
-# the question against the destination's own description/tags/category and
-# returns a templated answer built from that data. Good enough for a Phase
-# 1-adjacent demo; a real model would need hosted inference we don't have
-# here.
+# Ask a question -- free-form Q&A backed by Claude (see app/utils/ai.py),
+# grounded in the destination's own catalogue data and reviews so it doesn't
+# invent facts. Falls back to a templated answer if no API key is configured
+# or the request fails.
 # ---------------------------------------------------------------------------
 
 @destinations_bp.route("/<destination_id>/ask", methods=["POST"])
@@ -141,21 +141,5 @@ def ask_question(destination_id):
     if not question:
         return jsonify({"error": "question is required"}), 400
 
-    q = question.lower()
-    name = destination["name"]
-
-    if any(w in q for w in ["open", "hour", "time", "close"]):
-        answer = f"{name} is generally open during daytime hours. Exact hours can vary, so it's worth checking locally before you go."
-    elif any(w in q for w in ["where", "location", "located", "address", "find"]):
-        answer = f"{name} is located in the {destination['neighborhood']} area of Yaoundé."
-    elif any(w in q for w in ["cost", "price", "fee", "ticket", "how much"]):
-        answer = f"Entry fees for {name} can vary and may not always be posted online -- it's best to confirm on-site."
-    elif any(w in q for w in ["what", "about", "why", "worth", "see", "do"]):
-        answer = f"{destination['description']} It's known for: {', '.join(destination.get('tags', []))}."
-    else:
-        answer = (
-            f"{destination['description']} If you have a more specific question about "
-            f"{name}, try asking about its location, hours, or what makes it worth visiting."
-        )
-
+    answer = answer_destination_question(destination, question)
     return jsonify({"question": question, "answer": answer}), 200

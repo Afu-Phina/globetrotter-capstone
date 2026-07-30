@@ -11,3 +11,7 @@ services:
       - ./backend:/app
     environment:
       - GLOBETROTTER_SECRET=dev-secret-change-me
+      # Powers the "ask a question" AI feature (app/utils/ai.py). Pulled from
+      # the host shell or a .env file in this directory -- never hardcode a
+      # real key here. Feature degrades to a templated answer if unset.
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
