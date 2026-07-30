@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globetrotter-backend
+  labels:
+    app: globetrotter-backend
+spec:
+  # storage.py's write lock is a process-local threading.Lock, not a
+  # cross-process/cross-pod lock -- more than one replica writing to the
+  # same JSON files would race and corrupt data. Keep this at 1 until the
+  # storage layer is backed by a real database.
+  replicas: 1
+  selector:
+    matchLabels:
+      app: globetrotter-backend
+  template:
+    metadata:
+      labels:
+        app: globetrotter-backend
+    spec:
+      # The image bakes in seed data at /app/app/data (destinations,
+      # reviews, ...). Mounting the PVC straight onto that path would hide
+      # the seed files behind an empty volume on first boot, so this copies
+      # them onto the volume once, before the app container starts.
+      initContainers:
+        - name: seed-data
+          image: globetrotter-backend:local
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - |
+              if [ -z "$(ls -A /mnt/data 2>/dev/null)" ]; then
+                cp -a /app/app/data/. /mnt/data/
+              fi
+          volumeMounts:
+            - name: data
+              mountPath: /mnt/data
+      containers:
+        - name: globetrotter-backend
+          image: globetrotter-backend:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - secretRef:
+                name: globetrotter-secret
+          volumeMounts:
+            - name: data
+              mountPath: /app/app/data
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 5000
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: globetrotter-data
