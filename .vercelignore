@@ -1,0 +1,15 @@
+# Legacy monolith and course scaffolding -- not part of the deployed app.
+app/
+tests/
+data/
+k8s/
+
+# Flutter platform targets not needed for a web-only deploy; large and slow
+# to upload.
+frontend/globetrotter/android/
+frontend/globetrotter/ios/
+frontend/globetrotter/macos/
+frontend/globetrotter/linux/
+frontend/globetrotter/windows/
+frontend/globetrotter/.dart_tool/
+frontend/globetrotter/.pub-cache/
