@@ -40,8 +40,6 @@ def answer_destination_question(destination: dict, question: str) -> str:
     the destination's own catalogue data and recent reviews so it doesn't
     invent facts (exact prices, hours) the catalogue doesn't have.
     """
-    import os
-
     if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
         return _fallback_answer(destination, question)
 
