@@ -1,0 +1,325 @@
+[
+  {
+    "id": "dest-001",
+    "name": "Mvog-Betsi Zoo",
+    "category": "Nature & Wildlife",
+    "neighborhood": "Mvog-Betsi",
+    "description": "A zoo and primate rescue center home to gorillas, chimpanzees and other native wildlife, run in partnership with conservation groups.",
+    "tags": [
+      "nature",
+      "family",
+      "wildlife"
+    ],
+    "popularity": 88,
+    "image_url": "/static/images/mvog_betsi_zoo.png",
+    "image_attribution": null
+  },
+  {
+    "id": "dest-002",
+    "name": "Monument de la Réunification",
+    "category": "History & Culture",
+    "neighborhood": "Centre-ville",
+    "description": "A landmark monument commemorating the reunification of French and British Cameroon, with a spiral viewing platform over the city.",
+    "tags": [
+      "history",
+      "landmark",
+      "views"
+    ],
+    "popularity": 95,
+    "image_url": "/static/images/monument_reunification.png",
+    "image_attribution": null
+  },
+  {
+    "id": "dest-003",
+    "name": "Marche Central (Mfoundi Market)",
+    "category": "Markets & Shopping",
+    "neighborhood": "Mfoundi",
+    "description": "Yaoundé's largest and busiest market, packed with textiles, produce, crafts and street food stalls.",
+    "tags": [
+      "shopping",
+      "food",
+      "local life"
+    ],
+    "popularity": 91,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/da/March%C3%A9_central_-_Central_market_%28interior%29_in_Yaound%C3%A9.JPG",
+    "image_attribution": "Bdx, CC BY-SA 4.0, via Wikimedia Commons"
+  },
+  {
+    "id": "dest-004",
+    "name": "Notre-Dame des Victoires Cathedral",
+    "category": "History & Culture",
+    "neighborhood": "Centre-ville",
+    "description": "A striking Catholic cathedral known for its architecture and as a quiet spot in the busy city center.",
+    "tags": [
+      "history",
+      "architecture",
+      "religion"
+    ],
+    "popularity": 76,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Cath%C3%A9drale_de_Yaound%C3%A9.jpg",
+    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons"
+  },
+  {
+    "id": "dest-005",
+    "name": "Mont Fébé",
+    "category": "Nature & Views",
+    "neighborhood": "Fébé",
+    "description": "A hill overlooking the city with hiking trails, a hotel, and panoramic viewpoints popular at sunset.",
+    "tags": [
+      "nature",
+      "hiking",
+      "views"
+    ],
+    "popularity": 84,
+    "image_url": "/static/images/mont_febe.png",
+    "image_attribution": null
+  },
+  {
+    "id": "dest-006",
+    "name": "Bastos Neighborhood",
+    "category": "Nightlife & Dining",
+    "neighborhood": "Bastos",
+    "description": "An upscale district known for restaurants, embassies, cafes and nightlife, popular with visitors and expats.",
+    "tags": [
+      "dining",
+      "nightlife",
+      "upscale"
+    ],
+    "popularity": 80,
+    "image_url": "/static/images/bastos.png",
+    "image_attribution": null
+  },
+  {
+    "id": "dest-007",
+    "name": "National Museum of Yaoundé",
+    "category": "History & Culture",
+    "neighborhood": "Centre-ville",
+    "description": "Housed in a former presidential palace, showcasing Cameroonian art, artifacts and royal regalia.",
+    "tags": [
+      "history",
+      "art",
+      "museum"
+    ],
+    "popularity": 72,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Mus%C3%A9e_National_du_Cameroun_03.JPG",
+    "image_attribution": "Z. NGNOGUE, CC BY-SA 3.0, via Wikimedia Commons"
+  },
+  {
+    "id": "dest-008",
+    "name": "Nsimeyong",
+    "category": "Local Life",
+    "neighborhood": "Nsimeyong",
+    "description": "A lively residential neighborhood known for local food spots and everyday Yaoundé street life.",
+    "tags": [
+      "local life",
+      "food"
+    ],
+    "popularity": 60,
+    "image_url": "/static/images/nsimeyong.png",
+    "image_attribution": null
+  },
+  {
+    "id": "dest-009",
+    "name": "Mvog-Ada",
+    "category": "Local Life",
+    "neighborhood": "Mvog-Ada",
+    "description": "A busy residential and commercial neighborhood, good for experiencing everyday Yaoundé away from the main tourist spots.",
+    "tags": [
+      "local life",
+      "neighborhood"
+    ],
+    "popularity": 55,
+    "image_url": "/static/images/mvog_ada.png",
+    "image_attribution": null
+  },
+  {
+    "id": "dest-010",
+    "name": "Etoa-Meki Market",
+    "category": "Markets & Shopping",
+    "neighborhood": "Etoa-Meki",
+    "description": "A neighborhood market popular with locals for produce, household goods and everyday shopping.",
+    "tags": [
+      "shopping",
+      "food",
+      "local life"
+    ],
+    "popularity": 58,
+    "image_url": null,
+    "image_attribution": null
+  },
+  {
+    "id": "dest-011",
+    "name": "Chefferie Traditionnelle d'Ekounou",
+    "category": "History & Culture",
+    "neighborhood": "Ekounou",
+    "description": "A traditional chieftaincy site reflecting local customary institutions and heritage in the Ekounou area.",
+    "tags": [
+      "history",
+      "tradition",
+      "culture"
+    ],
+    "popularity": 52,
+    "image_url": null,
+    "image_attribution": null
+  },
+  {
+    "id": "dest-012",
+    "name": "Yaoundé Golf Club",
+    "category": "Sports & Recreation",
+    "neighborhood": "Centre-ville",
+    "description": "A long-established golf course offering a quiet, green recreational space in the middle of the city.",
+    "tags": [
+      "sports",
+      "recreation",
+      "outdoors"
+    ],
+    "popularity": 48,
+    "image_url": "/static/images/yaounde_golf_club.png",
+    "image_attribution": null
+  },
+  {
+    "id": "dest-013",
+    "name": "Stade Ahmadou Ahidjo",
+    "category": "Sports & Recreation",
+    "neighborhood": "Centre-ville",
+    "description": "Yaoundé's main football stadium, hosting national matches and major sporting events.",
+    "tags": [
+      "sports",
+      "stadium",
+      "events"
+    ],
+    "popularity": 70,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/91/Stade_Ahmadou_Ahidjo_2014_%281%29.JPG",
+    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons"
+  },
+  {
+    "id": "dest-014",
+    "name": "Quartier du Gouvernement",
+    "category": "History & Culture",
+    "neighborhood": "Centre Administratif",
+    "description": "The administrative district housing government ministries, known for its formal architecture and wide boulevards.",
+    "tags": [
+      "architecture",
+      "landmark",
+      "administration"
+    ],
+    "popularity": 45,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Prime_Minister_Building%2C_Yaound%C3%A9%2C_Cameroon.jpg",
+    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons"
+  },
+  {
+    "id": "dest-015",
+    "name": "Hilton Yaoundé Viewpoint",
+    "category": "Nature & Views",
+    "neighborhood": "Centre-ville",
+    "description": "A hilltop hotel known locally for one of the best panoramic views over central Yaoundé.",
+    "tags": [
+      "views",
+      "landmark"
+    ],
+    "popularity": 63,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Hilton_Hotel_Yaound%C3%A9.JPG",
+    "image_attribution": "Fawaz.tairou, CC BY-SA 3.0, via Wikimedia Commons"
+  },
+  {
+    "id": "dest-016",
+    "name": "Université de Yaoundé I",
+    "category": "Local Life",
+    "neighborhood": "Ngoa-Ekelle",
+    "description": "The country's oldest public university, with a large green campus and a lively student atmosphere nearby.",
+    "tags": [
+      "education",
+      "local life",
+      "landmark"
+    ],
+    "popularity": 50,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/19/Entr%C3%A9e_universit%C3%A9_de_Yaound%C3%A9_1.jpg",
+    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons"
+  },
+  {
+    "id": "dest-017",
+    "name": "Complexe Sportif de Yaoundé",
+    "category": "Sports & Recreation",
+    "neighborhood": "Mfandena",
+    "description": "A multipurpose sports complex used for athletics, basketball and community sporting events.",
+    "tags": [
+      "sports",
+      "recreation"
+    ],
+    "popularity": 47,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Yaound%C3%A9_Sports_Palace_2014_%2805%29.JPG",
+    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons"
+  },
+  {
+    "id": "dest-018",
+    "name": "Essos Market",
+    "category": "Markets & Shopping",
+    "neighborhood": "Essos",
+    "description": "A neighborhood market known for fresh produce and a genuine, non-touristy shopping experience.",
+    "tags": [
+      "shopping",
+      "food",
+      "local life"
+    ],
+    "popularity": 54,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/df/Quartier_Essos_Yaound%C3%A9_Cameroun.jpg",
+    "image_attribution": "Amanart pictures, CC BY-SA 4.0, via Wikimedia Commons"
+  },
+  {
+    "id": "dest-019",
+    "name": "Nsam Market",
+    "category": "Markets & Shopping",
+    "neighborhood": "Nsam",
+    "description": "A busy local market serving the Nsam neighborhood with produce, textiles and household goods.",
+    "tags": [
+      "shopping",
+      "local life"
+    ],
+    "popularity": 49,
+    "image_url": "/static/images/nsam_market.png",
+    "image_attribution": null
+  },
+  {
+    "id": "dest-020",
+    "name": "Biyem-Assi Neighborhood",
+    "category": "Local Life",
+    "neighborhood": "Biyem-Assi",
+    "description": "A large, lively residential neighborhood with a mix of local shops, food stalls and everyday city life.",
+    "tags": [
+      "local life",
+      "food"
+    ],
+    "popularity": 51,
+    "image_url": "/static/images/biyem_assi.png",
+    "image_attribution": null
+  },
+  {
+    "id": "dest-021",
+    "name": "Ngousso Neighborhood",
+    "category": "Local Life",
+    "neighborhood": "Ngousso",
+    "description": "A growing residential area on the edge of the city, offering a quieter, more local pace of life.",
+    "tags": [
+      "local life",
+      "neighborhood"
+    ],
+    "popularity": 40,
+    "image_url": "/static/images/ngousso_neighborhood.png",
+    "image_attribution": null
+  },
+  {
+    "id": "dest-022",
+    "name": "Mfoundi River Banks",
+    "category": "Nature & Views",
+    "neighborhood": "Mfoundi",
+    "description": "A stretch of the river that runs through the city, offering a different, quieter view of Yaoundé's landscape.",
+    "tags": [
+      "nature",
+      "views",
+      "walk"
+    ],
+    "popularity": 42,
+    "image_url": "/static/images/mfoundi_river_banks.png",
+    "image_attribution": null
+  }
+]
