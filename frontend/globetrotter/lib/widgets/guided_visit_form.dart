@@ -16,13 +16,31 @@ class GuidedVisitForm extends StatefulWidget {
   State<GuidedVisitForm> createState() => _GuidedVisitFormState();
 }
 
-class _GuidedVisitFormState extends State<GuidedVisitForm> {
+class _GuidedVisitFormState extends State<GuidedVisitForm> with SingleTickerProviderStateMixin {
   DateTime? _date;
   TimeOfDay? _time;
   int _numPeople = 2;
+  final _requestsController = TextEditingController();
   bool _booking = false;
   bool _booked = false;
   String? _error;
+
+  late final AnimationController _confirmController;
+  late final Animation<double> _checkScale;
+
+  @override
+  void initState() {
+    super.initState();
+    _confirmController = AnimationController(vsync: this, duration: const Duration(milliseconds: 450));
+    _checkScale = CurvedAnimation(parent: _confirmController, curve: Curves.elasticOut);
+  }
+
+  @override
+  void dispose() {
+    _confirmController.dispose();
+    _requestsController.dispose();
+    super.dispose();
+  }
 
   Future<void> _pickDate() async {
     final picked = await showDatePicker(
@@ -38,6 +56,10 @@ class _GuidedVisitFormState extends State<GuidedVisitForm> {
     final picked = await showTimePicker(context: context, initialTime: const TimeOfDay(hour: 10, minute: 0));
     if (picked != null) setState(() => _time = picked);
   }
+
+  String get _dateLabel => _date == null
+      ? 'Date'
+      : '${_date!.year}-${_date!.month.toString().padLeft(2, '0')}-${_date!.day.toString().padLeft(2, '0')}';
 
   Future<void> _book() async {
     if (_date == null || _time == null) {
@@ -57,8 +79,10 @@ class _GuidedVisitFormState extends State<GuidedVisitForm> {
         date: dateStr,
         time: timeStr,
         numPeople: _numPeople,
+        specialRequests: _requestsController.text.trim(),
       );
       setState(() => _booked = true);
+      _confirmController.forward();
     } catch (e) {
       setState(() => _error = 'Could not book this visit. Please try again.');
     } finally {
@@ -70,20 +94,60 @@ class _GuidedVisitFormState extends State<GuidedVisitForm> {
   Widget build(BuildContext context) {
     if (_booked) {
       return Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
-          color: AppColors.forest.withOpacity(0.06),
+          color: AppColors.mist,
           borderRadius: BorderRadius.circular(AppRadius.card),
+          border: Border.all(color: AppColors.border),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Icon(Icons.check_circle, color: AppColors.forest),
-            const SizedBox(width: AppSpacing.sm),
-            Expanded(
-              child: Text(
-                'Visit to ${widget.destinationName} booked! You can see it under your bookings.',
-                style: Theme.of(context).textTheme.bodyLarge,
+            Center(
+              child: ScaleTransition(
+                scale: _checkScale,
+                child: Container(
+                  width: 56,
+                  height: 56,
+                  decoration: const BoxDecoration(color: AppColors.forest, shape: BoxShape.circle),
+                  child: const Icon(Icons.check, color: AppColors.cream, size: 32),
+                ),
               ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              'Visit booked!',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              widget.destinationName,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Container(
+              padding: const EdgeInsets.all(AppSpacing.sm),
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                children: [
+                  _confirmRow(Icons.calendar_today, _dateLabel),
+                  _confirmRow(Icons.access_time, _time?.format(context) ?? ''),
+                  _confirmRow(Icons.people_outline, '$_numPeople visitor${_numPeople > 1 ? 's' : ''}'),
+                  if (_requestsController.text.trim().isNotEmpty)
+                    _confirmRow(Icons.notes, _requestsController.text.trim()),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              'You can view or cancel this booking anytime from My Bookings.',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
         ),
@@ -107,11 +171,7 @@ class _GuidedVisitFormState extends State<GuidedVisitForm> {
               child: OutlinedButton.icon(
                 onPressed: _pickDate,
                 icon: const Icon(Icons.calendar_today, size: 16),
-                label: Text(
-                  _date == null
-                      ? 'Date'
-                      : '${_date!.year}-${_date!.month.toString().padLeft(2, '0')}-${_date!.day.toString().padLeft(2, '0')}',
-                ),
+                label: Text(_dateLabel),
               ),
             ),
             const SizedBox(width: AppSpacing.sm),
@@ -142,6 +202,15 @@ class _GuidedVisitFormState extends State<GuidedVisitForm> {
             ),
           ],
         ),
+        const SizedBox(height: AppSpacing.sm),
+        TextField(
+          controller: _requestsController,
+          maxLines: 2,
+          decoration: const InputDecoration(
+            labelText: 'Special requests (optional)',
+            hintText: 'e.g. wheelchair access, a French-speaking guide...',
+          ),
+        ),
         if (_error != null) ...[
           const SizedBox(height: AppSpacing.xs),
           Text(_error!, style: const TextStyle(color: AppColors.error, fontSize: 13)),
@@ -161,6 +230,20 @@ class _GuidedVisitFormState extends State<GuidedVisitForm> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _confirmRow(IconData icon, String text) {
+    if (text.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Icon(icon, size: 15, color: AppColors.inkMuted),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(child: Text(text, style: const TextStyle(fontSize: 13))),
+        ],
+      ),
     );
   }
 }

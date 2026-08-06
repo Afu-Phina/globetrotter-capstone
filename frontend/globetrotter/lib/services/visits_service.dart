@@ -7,12 +7,14 @@ class VisitsService {
     required String date,
     required String time,
     required int numPeople,
+    String specialRequests = '',
   }) async {
     final result = await apiService.post('/visits', {
       'destination_id': destinationId,
       'date': date,
       'time': time,
       'num_people': numPeople,
+      'special_requests': specialRequests,
     });
     return Visit.fromJson(result);
   }

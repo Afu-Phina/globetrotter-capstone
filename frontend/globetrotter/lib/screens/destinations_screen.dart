@@ -39,6 +39,17 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
     'Sports & Recreation',
     'Local Life',
   ];
+
+  static const _categoryIcons = {
+    'All': Icons.apps_rounded,
+    'Nature & Wildlife': Icons.pets_rounded,
+    'History & Culture': Icons.account_balance_rounded,
+    'Markets & Shopping': Icons.storefront_rounded,
+    'Nature & Views': Icons.terrain_rounded,
+    'Nightlife & Dining': Icons.local_bar_rounded,
+    'Sports & Recreation': Icons.sports_soccer_rounded,
+    'Local Life': Icons.groups_rounded,
+  };
   String _selectedCategory = 'All';
 
   @override
@@ -196,6 +207,11 @@ class _DestinationsScreenState extends State<DestinationsScreen> {
                   final category = _categories[index];
                   final selected = category == _selectedCategory;
                   return ChoiceChip(
+                    avatar: Icon(
+                      _categoryIcons[category],
+                      size: 16,
+                      color: selected ? AppColors.marigold : AppColors.inkMuted,
+                    ),
                     label: Text(category),
                     selected: selected,
                     onSelected: (_) {

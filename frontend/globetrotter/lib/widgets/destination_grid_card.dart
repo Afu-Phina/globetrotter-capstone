@@ -61,10 +61,12 @@ class _DestinationGridCardState extends State<DestinationGridCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AspectRatio(
-                aspectRatio: 1.3,
-                child: Stack(
-                  children: [
+              Hero(
+                tag: 'destination-image-${widget.destination.id}',
+                child: AspectRatio(
+                  aspectRatio: 1.3,
+                  child: Stack(
+                    children: [
                     if (widget.destination.imageUrl != null)
                       Positioned.fill(
                         child: DestinationImage(
@@ -125,6 +127,7 @@ class _DestinationGridCardState extends State<DestinationGridCard> {
                         ),
                       ),
                   ],
+                  ),
                 ),
               ),
               Padding(
@@ -146,10 +149,24 @@ class _DestinationGridCardState extends State<DestinationGridCard> {
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 12),
                     ),
                     const SizedBox(height: 4),
-                    RatingStars(
-                      averageRating: widget.destination.averageRating,
-                      reviewCount: widget.destination.reviewCount,
-                      size: 11,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: RatingStars(
+                            averageRating: widget.destination.averageRating,
+                            reviewCount: widget.destination.reviewCount,
+                            size: 11,
+                          ),
+                        ),
+                        if (widget.destination.formattedVisitDuration != null) ...[
+                          const Icon(Icons.schedule, size: 11, color: AppColors.inkMuted),
+                          const SizedBox(width: 2),
+                          Text(
+                            widget.destination.formattedVisitDuration!,
+                            style: const TextStyle(fontSize: 10, color: AppColors.inkMuted),
+                          ),
+                        ],
+                      ],
                     ),
                   ],
                 ),

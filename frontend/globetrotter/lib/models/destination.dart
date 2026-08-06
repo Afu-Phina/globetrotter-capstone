@@ -17,6 +17,16 @@ class Destination {
   // Wikimedia Commons under CC BY-SA, which requires attribution). Null
   // when there's no real photo.
   final String? imageAttribution;
+  // Editorial estimate of how long a typical visit takes -- authored per
+  // place (like a guidebook would give), not a live/computed value. Null
+  // if we haven't estimated one yet.
+  final int? estimatedVisitMinutes;
+  // Only populated for destinations where real, verified facts were
+  // found -- null for places we don't have confirmed history on, rather
+  // than a guess.
+  final String? history;
+  final String? funFact;
+  final List<String> travelTips;
 
   Destination({
     required this.id,
@@ -30,6 +40,10 @@ class Destination {
     this.reviewCount = 0,
     this.imageUrl,
     this.imageAttribution,
+    this.estimatedVisitMinutes,
+    this.history,
+    this.funFact,
+    this.travelTips = const [],
   });
 
   factory Destination.fromJson(Map<String, dynamic> json) {
@@ -45,6 +59,23 @@ class Destination {
       reviewCount: json['review_count'] ?? 0,
       imageUrl: json['image_url'],
       imageAttribution: json['image_attribution'],
+      estimatedVisitMinutes: json['estimated_visit_minutes'],
+      history: json['history'],
+      funFact: json['fun_fact'],
+      travelTips: List<String>.from(json['travel_tips'] ?? []),
     );
+  }
+
+  /// e.g. "~40 min" or "~1.5 hr" -- for display only.
+  String? get formattedVisitDuration {
+    final minutes = estimatedVisitMinutes;
+    if (minutes == null) return null;
+    if (minutes < 60) return '~$minutes min';
+    final hours = minutes / 60;
+    final rounded = (hours * 2).round() / 2; // nearest half hour
+    final label = rounded == rounded.roundToDouble()
+        ? rounded.toInt().toString()
+        : rounded.toString();
+    return '~$label hr';
   }
 }

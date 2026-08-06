@@ -115,6 +115,14 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                                             '${visit.date} · ${visit.time} · ${visit.numPeople} people',
                                             style: Theme.of(context).textTheme.bodyMedium,
                                           ),
+                                          if (visit.specialRequests.isNotEmpty)
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 2),
+                                              child: Text(
+                                                'Note: ${visit.specialRequests}',
+                                                style: const TextStyle(fontSize: 12, color: AppColors.inkMuted, fontStyle: FontStyle.italic),
+                                              ),
+                                            ),
                                           if (cancelled)
                                             const Padding(
                                               padding: EdgeInsets.only(top: 2),

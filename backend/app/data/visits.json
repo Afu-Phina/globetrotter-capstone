@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "ff193239-4c68-4ab3-a6db-7b2ef564a1a5",
+    "user_id": "d71cd5a8-8220-41ed-868a-71f2d20b4bc2",
+    "destination_id": "dest-002",
+    "destination_name": "Monument de la Réunification",
+    "date": "2026-08-07",
+    "time": "10:00",
+    "num_people": 2,
+    "special_requests": "",
+    "status": "confirmed",
+    "created_at": "2026-08-06T20:04:33.429234+00:00"
+  }
+]

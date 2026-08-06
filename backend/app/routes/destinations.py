@@ -5,6 +5,7 @@ from flask import Blueprint, request, jsonify
 
 from app.utils.storage import read_all, write_all, find_by_id
 from app.utils.auth import require_auth
+from app.utils.ai_assistant import answer_question
 
 destinations_bp = Blueprint("destinations", __name__)
 
@@ -74,6 +75,37 @@ def get_destination(destination_id):
         return jsonify({"error": "Destination not found"}), 404
     return jsonify(_with_rating(destination)), 200
 
+@destinations_bp.route("/<destination_id>/nearby", methods=["GET"])
+def get_nearby_destinations(destination_id):
+    """
+    "Nearby" using our own curated destinations -- not a real Places API
+    (which we don't have a key for), so this is honest about its limits:
+    it surfaces other destinations we know about in the same neighborhood,
+    falling back to the same category if the neighborhood has nothing else.
+    It will never claim to know about restaurants/hotels we have no data on.
+    """
+    destination = find_by_id("destinations", destination_id)
+    if not destination:
+        return jsonify({"error": "Destination not found"}), 404
+
+    all_destinations = read_all("destinations")
+    same_neighborhood = [
+        d for d in all_destinations
+        if d["id"] != destination_id and d["neighborhood"] == destination["neighborhood"]
+    ]
+
+    if same_neighborhood:
+        results = same_neighborhood
+    else:
+        results = [
+            d for d in all_destinations
+            if d["id"] != destination_id and d["category"] == destination["category"]
+        ]
+
+    results.sort(key=lambda d: d.get("popularity", 0), reverse=True)
+    return jsonify([_with_rating(d) for d in results[:5]]), 200
+
+
 
 # ---------------------------------------------------------------------------
 # Reviews
@@ -123,11 +155,10 @@ def add_review(current_user_id, destination_id):
 
 
 # ---------------------------------------------------------------------------
-# Ask a question -- rule-based FAQ, not a real AI model. Matches keywords in
-# the question against the destination's own description/tags/category and
-# returns a templated answer built from that data. Good enough for a Phase
-# 1-adjacent demo; a real model would need hosted inference we don't have
-# here.
+# Ask a question -- backed by Google's Gemini API (see ai_assistant.py) so
+# visitors get real, contextual answers instead of keyword-matched
+# templates. Falls back to the old rule-based logic if the API key is
+# missing or the call fails, so the feature never goes fully dark.
 # ---------------------------------------------------------------------------
 
 @destinations_bp.route("/<destination_id>/ask", methods=["POST"])
@@ -141,21 +172,5 @@ def ask_question(destination_id):
     if not question:
         return jsonify({"error": "question is required"}), 400
 
-    q = question.lower()
-    name = destination["name"]
-
-    if any(w in q for w in ["open", "hour", "time", "close"]):
-        answer = f"{name} is generally open during daytime hours. Exact hours can vary, so it's worth checking locally before you go."
-    elif any(w in q for w in ["where", "location", "located", "address", "find"]):
-        answer = f"{name} is located in the {destination['neighborhood']} area of Yaoundé."
-    elif any(w in q for w in ["cost", "price", "fee", "ticket", "how much"]):
-        answer = f"Entry fees for {name} can vary and may not always be posted online -- it's best to confirm on-site."
-    elif any(w in q for w in ["what", "about", "why", "worth", "see", "do"]):
-        answer = f"{destination['description']} It's known for: {', '.join(destination.get('tags', []))}."
-    else:
-        answer = (
-            f"{destination['description']} If you have a more specific question about "
-            f"{name}, try asking about its location, hours, or what makes it worth visiting."
-        )
-
-    return jsonify({"question": question, "answer": answer}), 200
+    answer, used_ai = answer_question(destination, question)
+    return jsonify({"question": question, "answer": answer, "ai_generated": used_ai}), 200

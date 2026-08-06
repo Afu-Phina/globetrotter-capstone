@@ -8,11 +8,12 @@ class _ChatMessage {
   _ChatMessage(this.text, this.isUser);
 }
 
-/// Inline "ask a question about this place" widget. Answers come from a
-/// rule-based endpoint on the backend (keyword matching against the
-/// destination's own data) -- not a hosted AI model, which this
-/// environment has no way to call. Framed honestly to the user as a quick
-/// FAQ rather than a real assistant.
+/// Inline "ask a question about this place" widget. Answers come from the
+/// backend's /ask endpoint, which calls Google's Gemini API with context
+/// about the destination -- real natural-language answers, not keyword
+/// matching. Falls back to a simpler templated answer server-side if the
+/// AI call fails, so this widget doesn't need to know or care which one
+/// actually generated the response.
 class AskQuestionWidget extends StatefulWidget {
   final String destinationId;
   const AskQuestionWidget({super.key, required this.destinationId});

@@ -31,11 +31,29 @@ class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
   List<Review> _reviews = [];
   bool _loadingReviews = true;
 
+  List<Destination> _nearby = [];
+  bool _loadingNearby = true;
+
   @override
   void initState() {
     super.initState();
     _fetchItineraries();
     _fetchReviews();
+    _fetchNearby();
+  }
+
+  Future<void> _fetchNearby() async {
+    try {
+      final results = await destinationsService.getNearby(widget.destination.id);
+      if (mounted) {
+        setState(() {
+          _nearby = results;
+          _loadingNearby = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) setState(() => _loadingNearby = false);
+    }
   }
 
   Future<void> _fetchItineraries() async {
@@ -142,40 +160,43 @@ class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
                 ),
               ),
               if (d.imageUrl != null) ...[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  child: Stack(
-                    children: [
-                      AspectRatio(
-                        aspectRatio: 16 / 9,
-                        child: DestinationImage(
-                          source: d.imageUrl!,
-                          debugLabel: d.name,
-                          fallback: Container(
-                            color: AppColors.surface,
-                            child: const Center(
-                              child: Icon(Icons.image_not_supported_outlined, color: AppColors.inkMuted),
+                Hero(
+                  tag: 'destination-image-${d.id}',
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(AppRadius.card),
+                    child: Stack(
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: DestinationImage(
+                            source: d.imageUrl!,
+                            debugLabel: d.name,
+                            fallback: Container(
+                              color: AppColors.surface,
+                              child: const Center(
+                                child: Icon(Icons.image_not_supported_outlined, color: AppColors.inkMuted),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      if (d.imageAttribution != null)
-                        Positioned(
-                          right: 6,
-                          bottom: 6,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.55),
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Text(
-                              d.imageAttribution!,
-                              style: const TextStyle(fontSize: 9, color: Colors.white70),
+                        if (d.imageAttribution != null)
+                          Positioned(
+                            right: 6,
+                            bottom: 6,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.55),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                d.imageAttribution!,
+                                style: const TextStyle(fontSize: 9, color: Colors.white70),
+                              ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -224,6 +245,59 @@ class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
                 ],
               ),
               const SizedBox(height: AppSpacing.md),
+              if (d.history != null) ...[
+                Row(
+                  children: [
+                    const Icon(Icons.history_edu_outlined, size: 16, color: AppColors.forest),
+                    const SizedBox(width: AppSpacing.xs),
+                    Text('History', style: Theme.of(context).textTheme.titleMedium),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(d.history!, style: Theme.of(context).textTheme.bodyMedium),
+                const SizedBox(height: AppSpacing.md),
+              ],
+              if (d.funFact != null) ...[
+                Container(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  decoration: BoxDecoration(
+                    color: AppColors.marigold.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.lightbulb_outline, size: 16, color: AppColors.marigold),
+                      const SizedBox(width: AppSpacing.sm),
+                      Expanded(
+                        child: Text(d.funFact!, style: Theme.of(context).textTheme.bodyMedium),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+              ],
+              if (d.travelTips.isNotEmpty) ...[
+                Row(
+                  children: [
+                    const Icon(Icons.tips_and_updates_outlined, size: 16, color: AppColors.forest),
+                    const SizedBox(width: AppSpacing.xs),
+                    Text('Travel Tips', style: Theme.of(context).textTheme.titleMedium),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                ...d.travelTips.map((tip) => Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('•  '),
+                          Expanded(child: Text(tip, style: Theme.of(context).textTheme.bodyMedium)),
+                        ],
+                      ),
+                    )),
+                const SizedBox(height: AppSpacing.sm),
+              ],
               OutlinedButton.icon(
                 onPressed: _openInMaps,
                 icon: const Icon(Icons.directions, size: 16),
@@ -288,6 +362,42 @@ class _DestinationDetailSheetState extends State<DestinationDetailSheet> {
               ),
 
               const SizedBox(height: AppSpacing.lg),
+              const Divider(),
+              const SizedBox(height: AppSpacing.sm),
+              if (!_loadingNearby && _nearby.isNotEmpty) ...[
+                Text('Nearby in our guide', style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(height: 2),
+                Text(
+                  'Other places we know about nearby -- not a full map search.',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                SizedBox(
+                  height: 40,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _nearby.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: AppSpacing.sm),
+                    itemBuilder: (context, index) {
+                      final place = _nearby[index];
+                      return ActionChip(
+                        avatar: const Icon(Icons.place_outlined, size: 14, color: AppColors.forest),
+                        label: Text(place.name),
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (_) => DestinationDetailSheet(destination: place),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+              ],
+
               const Divider(),
               const SizedBox(height: AppSpacing.sm),
               Text('Add to itinerary', style: Theme.of(context).textTheme.titleMedium),

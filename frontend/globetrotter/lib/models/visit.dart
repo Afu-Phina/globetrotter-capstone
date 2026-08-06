@@ -7,6 +7,7 @@ class Visit {
   final int numPeople;
   final String status;
   final String createdAt;
+  final String specialRequests;
 
   Visit({
     required this.id,
@@ -17,6 +18,7 @@ class Visit {
     required this.numPeople,
     required this.status,
     required this.createdAt,
+    this.specialRequests = '',
   });
 
   factory Visit.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class Visit {
       numPeople: json['num_people'],
       status: json['status'],
       createdAt: json['created_at'],
+      specialRequests: json['special_requests'] ?? '',
     );
   }
 }

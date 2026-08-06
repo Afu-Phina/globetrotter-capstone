@@ -36,6 +36,11 @@ class DestinationsService {
     return Destination.fromJson(result);
   }
 
+  Future<List<Destination>> getNearby(String id) async {
+    final result = await apiService.get('/destinations/$id/nearby');
+    return (result as List).map((json) => Destination.fromJson(json)).toList();
+  }
+
   Future<List<Review>> getReviews(String destinationId) async {
     final result = await apiService.get('/destinations/$destinationId/reviews');
     return (result as List).map((json) => Review.fromJson(json)).toList();

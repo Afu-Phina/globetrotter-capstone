@@ -12,7 +12,14 @@
     ],
     "popularity": 88,
     "image_url": "/static/images/mvog_betsi_zoo.png",
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 150,
+    "history": "Founded in 1951, the zoo originally served as a quarantine holding area for animals being exported out of Cameroon, before evolving into the wildlife park and botanical garden it is today. It's now managed by Cameroon's Ministry of Forestry and Wildlife.",
+    "fun_fact": "The zoo's primates are cared for in partnership with Ape Action Africa, a conservation organization that began in the 1990s specifically to improve conditions for the primates living here.",
+    "travel_tips": [
+      "Visit in the morning when animals are most active",
+      "Wear comfortable, closed shoes"
+    ]
   },
   {
     "id": "dest-002",
@@ -27,7 +34,14 @@
     ],
     "popularity": 95,
     "image_url": "/static/images/monument_reunification.png",
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 40,
+    "history": "Commissioned by President Ahmadou Ahidjo, the monument was built between 1973 and 1976 by architect Armand Salomon, sculptor Gédéon Mpando, and Father Engelbert Mveng. It commemorates the 1961 reunification of French and British Cameroon, and later the 1972 formation of the United Republic of Cameroon.",
+    "fun_fact": "The bronze sculpture in front of the spiral tower weighs 53 tonnes and stands 7 metres tall -- it depicts a man carrying four children, symbolizing the country's regions coming together as one nation.",
+    "travel_tips": [
+      "A guided tour (where available) adds a lot of context",
+      "Photography rules can vary -- ask first"
+    ]
   },
   {
     "id": "dest-003",
@@ -42,7 +56,14 @@
     ],
     "popularity": 91,
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/da/March%C3%A9_central_-_Central_market_%28interior%29_in_Yaound%C3%A9.JPG",
-    "image_attribution": "Bdx, CC BY-SA 4.0, via Wikimedia Commons"
+    "image_attribution": "Bdx, CC BY-SA 4.0, via Wikimedia Commons",
+    "estimated_visit_minutes": 90,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "Bring cash -- cards are rarely accepted",
+      "Light bargaining is normal and expected"
+    ]
   },
   {
     "id": "dest-004",
@@ -57,7 +78,14 @@
     ],
     "popularity": 76,
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Cath%C3%A9drale_de_Yaound%C3%A9.jpg",
-    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons"
+    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons",
+    "estimated_visit_minutes": 40,
+    "history": "The cathedral's distinctive triangular design was consecrated in 1955, making it one of the older landmarks still standing in what's now central Yaoundé.",
+    "fun_fact": null,
+    "travel_tips": [
+      "A guided tour (where available) adds a lot of context",
+      "Photography rules can vary -- ask first"
+    ]
   },
   {
     "id": "dest-005",
@@ -72,7 +100,14 @@
     ],
     "popularity": 84,
     "image_url": "/static/images/mont_febe.png",
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 120,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "Go for sunset if you can",
+      "Trails can be uneven -- wear good footwear"
+    ]
   },
   {
     "id": "dest-006",
@@ -87,7 +122,14 @@
     ],
     "popularity": 80,
     "image_url": "/static/images/bastos.png",
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 120,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "Evenings get busy -- consider a reservation where possible",
+      "Keep some small cash for parking/tipping"
+    ]
   },
   {
     "id": "dest-007",
@@ -102,7 +144,14 @@
     ],
     "popularity": 72,
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Mus%C3%A9e_National_du_Cameroun_03.JPG",
-    "image_attribution": "Z. NGNOGUE, CC BY-SA 3.0, via Wikimedia Commons"
+    "image_attribution": "Z. NGNOGUE, CC BY-SA 3.0, via Wikimedia Commons",
+    "estimated_visit_minutes": 90,
+    "history": "The building started life in the early 1900s as a residence during the German colonial period, later became the official presidential palace after independence, and was officially converted into Cameroon's National Museum in 1988.",
+    "fun_fact": "Among the museum's roughly 30 rooms of artifacts is the saxophone once played by Manu Dibango, the Cameroonian musician known worldwide for the 1972 hit \"Soul Makossa.\"",
+    "travel_tips": [
+      "A guided tour (where available) adds a lot of context",
+      "Photography rules can vary -- ask first"
+    ]
   },
   {
     "id": "dest-008",
@@ -116,7 +165,14 @@
     ],
     "popularity": 60,
     "image_url": "/static/images/nsimeyong.png",
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 90,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "A great spot to see everyday life away from the main tourist landmarks",
+      "Best explored on foot with a local if possible"
+    ]
   },
   {
     "id": "dest-009",
@@ -130,7 +186,14 @@
     ],
     "popularity": 55,
     "image_url": "/static/images/mvog_ada.png",
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 90,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "A great spot to see everyday life away from the main tourist landmarks",
+      "Best explored on foot with a local if possible"
+    ]
   },
   {
     "id": "dest-010",
@@ -145,7 +208,14 @@
     ],
     "popularity": 58,
     "image_url": null,
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 60,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "Bring cash -- cards are rarely accepted",
+      "Light bargaining is normal and expected"
+    ]
   },
   {
     "id": "dest-011",
@@ -160,7 +230,14 @@
     ],
     "popularity": 52,
     "image_url": null,
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 45,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "A guided tour (where available) adds a lot of context",
+      "Photography rules can vary -- ask first"
+    ]
   },
   {
     "id": "dest-012",
@@ -175,7 +252,14 @@
     ],
     "popularity": 48,
     "image_url": "/static/images/yaounde_golf_club.png",
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 150,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "Check ahead for opening hours, they can vary by season",
+      "Bring water, especially in the dry season"
+    ]
   },
   {
     "id": "dest-013",
@@ -190,7 +274,14 @@
     ],
     "popularity": 70,
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/91/Stade_Ahmadou_Ahidjo_2014_%281%29.JPG",
-    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons"
+    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons",
+    "estimated_visit_minutes": 60,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "Check ahead for opening hours, they can vary by season",
+      "Bring water, especially in the dry season"
+    ]
   },
   {
     "id": "dest-014",
@@ -205,7 +296,14 @@
     ],
     "popularity": 45,
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Prime_Minister_Building%2C_Yaound%C3%A9%2C_Cameroon.jpg",
-    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons"
+    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons",
+    "estimated_visit_minutes": 30,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "A guided tour (where available) adds a lot of context",
+      "Photography rules can vary -- ask first"
+    ]
   },
   {
     "id": "dest-015",
@@ -219,7 +317,14 @@
     ],
     "popularity": 63,
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Hilton_Hotel_Yaound%C3%A9.JPG",
-    "image_attribution": "Fawaz.tairou, CC BY-SA 3.0, via Wikimedia Commons"
+    "image_attribution": "Fawaz.tairou, CC BY-SA 3.0, via Wikimedia Commons",
+    "estimated_visit_minutes": 60,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "Go for sunset if you can",
+      "Trails can be uneven -- wear good footwear"
+    ]
   },
   {
     "id": "dest-016",
@@ -234,7 +339,14 @@
     ],
     "popularity": 50,
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/19/Entr%C3%A9e_universit%C3%A9_de_Yaound%C3%A9_1.jpg",
-    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons"
+    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons",
+    "estimated_visit_minutes": 60,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "A great spot to see everyday life away from the main tourist landmarks",
+      "Best explored on foot with a local if possible"
+    ]
   },
   {
     "id": "dest-017",
@@ -248,7 +360,14 @@
     ],
     "popularity": 47,
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Yaound%C3%A9_Sports_Palace_2014_%2805%29.JPG",
-    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons"
+    "image_attribution": "CC BY-SA 4.0, via Wikimedia Commons",
+    "estimated_visit_minutes": 90,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "Check ahead for opening hours, they can vary by season",
+      "Bring water, especially in the dry season"
+    ]
   },
   {
     "id": "dest-018",
@@ -263,7 +382,14 @@
     ],
     "popularity": 54,
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/df/Quartier_Essos_Yaound%C3%A9_Cameroun.jpg",
-    "image_attribution": "Amanart pictures, CC BY-SA 4.0, via Wikimedia Commons"
+    "image_attribution": "Amanart pictures, CC BY-SA 4.0, via Wikimedia Commons",
+    "estimated_visit_minutes": 60,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "Bring cash -- cards are rarely accepted",
+      "Light bargaining is normal and expected"
+    ]
   },
   {
     "id": "dest-019",
@@ -277,7 +403,14 @@
     ],
     "popularity": 49,
     "image_url": "/static/images/nsam_market.png",
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 60,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "Bring cash -- cards are rarely accepted",
+      "Light bargaining is normal and expected"
+    ]
   },
   {
     "id": "dest-020",
@@ -291,7 +424,14 @@
     ],
     "popularity": 51,
     "image_url": "/static/images/biyem_assi.png",
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 90,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "A great spot to see everyday life away from the main tourist landmarks",
+      "Best explored on foot with a local if possible"
+    ]
   },
   {
     "id": "dest-021",
@@ -305,7 +445,14 @@
     ],
     "popularity": 40,
     "image_url": "/static/images/ngousso_neighborhood.png",
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 90,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "A great spot to see everyday life away from the main tourist landmarks",
+      "Best explored on foot with a local if possible"
+    ]
   },
   {
     "id": "dest-022",
@@ -320,6 +467,13 @@
     ],
     "popularity": 42,
     "image_url": "/static/images/mfoundi_river_banks.png",
-    "image_attribution": null
+    "image_attribution": null,
+    "estimated_visit_minutes": 30,
+    "history": null,
+    "fun_fact": null,
+    "travel_tips": [
+      "Go for sunset if you can",
+      "Trails can be uneven -- wear good footwear"
+    ]
   }
 ]

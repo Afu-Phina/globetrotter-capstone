@@ -17,6 +17,7 @@ def book_visit(current_user_id):
     date = (data.get("date") or "").strip()
     time = (data.get("time") or "").strip()
     num_people = data.get("num_people")
+    special_requests = (data.get("special_requests") or "").strip()
 
     if not destination_id or not find_by_id("destinations", destination_id):
         return jsonify({"error": "A valid destination_id is required"}), 400
@@ -35,6 +36,7 @@ def book_visit(current_user_id):
         "date": date,
         "time": time,
         "num_people": num_people,
+        "special_requests": special_requests,
         "status": "confirmed",
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
