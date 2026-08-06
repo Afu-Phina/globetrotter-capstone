@@ -5,15 +5,16 @@ import '../services/destinations_service.dart';
 class _ChatMessage {
   final String text;
   final bool isUser;
-  _ChatMessage(this.text, this.isUser);
+  final bool aiGenerated;
+  _ChatMessage(this.text, this.isUser, {this.aiGenerated = false});
 }
 
 /// Inline "ask a question about this place" widget. Answers come from the
 /// backend's /ask endpoint, which calls Google's Gemini API with context
 /// about the destination -- real natural-language answers, not keyword
 /// matching. Falls back to a simpler templated answer server-side if the
-/// AI call fails, so this widget doesn't need to know or care which one
-/// actually generated the response.
+/// AI call fails. The badge on each answer bubble shows which one actually
+/// generated it, so this is visible rather than a guess.
 class AskQuestionWidget extends StatefulWidget {
   final String destinationId;
   const AskQuestionWidget({super.key, required this.destinationId});
@@ -36,8 +37,8 @@ class _AskQuestionWidgetState extends State<AskQuestionWidget> {
     });
     _controller.clear();
     try {
-      final answer = await destinationsService.ask(widget.destinationId, question);
-      setState(() => _messages.add(_ChatMessage(answer, false)));
+      final (answer, aiGenerated) = await destinationsService.ask(widget.destinationId, question);
+      setState(() => _messages.add(_ChatMessage(answer, false, aiGenerated: aiGenerated)));
     } catch (e) {
       setState(() => _messages.add(_ChatMessage("Couldn't get an answer right now.", false)));
     } finally {
@@ -66,7 +67,7 @@ class _AskQuestionWidgetState extends State<AskQuestionWidget> {
         const SizedBox(height: AppSpacing.sm),
         if (_messages.isNotEmpty)
           Container(
-            constraints: const BoxConstraints(maxHeight: 220),
+            constraints: const BoxConstraints(maxHeight: 260),
             padding: const EdgeInsets.all(AppSpacing.sm),
             decoration: BoxDecoration(
               color: AppColors.mist,
@@ -74,27 +75,57 @@ class _AskQuestionWidgetState extends State<AskQuestionWidget> {
             ),
             child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: _messages
                     .map((m) => Align(
                           alignment: m.isUser ? Alignment.centerRight : Alignment.centerLeft,
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * 0.65,
-                            ),
-                            margin: const EdgeInsets.symmetric(vertical: 4),
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: m.isUser ? AppColors.forest : AppColors.surface,
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                            child: Text(
-                              m.text,
-                              style: TextStyle(
-                                color: m.isUser ? AppColors.forestDeep : AppColors.ink,
-                                fontSize: 13,
-                                fontWeight: m.isUser ? FontWeight.w600 : FontWeight.normal,
+                          child: Column(
+                            crossAxisAlignment:
+                                m.isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                            children: [
+                              if (!m.isUser)
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 4, bottom: 2),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        m.aiGenerated ? Icons.auto_awesome : Icons.info_outline,
+                                        size: 11,
+                                        color: m.aiGenerated ? AppColors.marigold : AppColors.inkMuted,
+                                      ),
+                                      const SizedBox(width: 3),
+                                      Text(
+                                        m.aiGenerated ? 'AI answer' : 'Quick answer',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w600,
+                                          color: m.aiGenerated ? AppColors.marigold : AppColors.inkMuted,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              Container(
+                                constraints: BoxConstraints(
+                                  maxWidth: MediaQuery.of(context).size.width * 0.65,
+                                ),
+                                margin: const EdgeInsets.only(bottom: 8),
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: m.isUser ? AppColors.forest : AppColors.surface,
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                child: Text(
+                                  m.text,
+                                  style: TextStyle(
+                                    color: m.isUser ? AppColors.forestDeep : AppColors.ink,
+                                    fontSize: 13,
+                                    fontWeight: m.isUser ? FontWeight.w600 : FontWeight.normal,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ))
                     .toList(),

@@ -54,11 +54,11 @@ class DestinationsService {
     return Review.fromJson(result);
   }
 
-  Future<String> ask(String destinationId, String question) async {
+  Future<(String, bool)> ask(String destinationId, String question) async {
     final result = await apiService.post('/destinations/$destinationId/ask', {
       'question': question,
     });
-    return result['answer'] as String;
+    return (result['answer'] as String, result['ai_generated'] as bool? ?? false);
   }
 }
 

@@ -36,6 +36,7 @@ def _rule_based_fallback(destination: dict, question: str) -> str:
 def answer_question(destination: dict, question: str) -> tuple[str, bool]:
     """Returns (answer, used_ai). used_ai=False means the fallback ran."""
     if not GEMINI_API_KEY:
+        print("[ai_assistant] GEMINI_API_KEY is not set -- falling back to rule-based answers.")
         return _rule_based_fallback(destination, question), False
 
     context_parts = [
@@ -69,10 +70,12 @@ def answer_question(destination: dict, question: str) -> tuple[str, bool]:
             json={"contents": [{"parts": [{"text": prompt}]}]},
             timeout=15,
         )
-    except requests.RequestException:
+    except requests.RequestException as e:
+        print(f"[ai_assistant] Gemini request failed: {e}")
         return _rule_based_fallback(destination, question), False
 
     if response.status_code != 200:
+        print(f"[ai_assistant] Gemini returned {response.status_code}: {response.text[:500]}")
         return _rule_based_fallback(destination, question), False
 
     try:
@@ -81,5 +84,6 @@ def answer_question(destination: dict, question: str) -> tuple[str, bool]:
         if not answer:
             raise ValueError("empty response")
         return answer, True
-    except (KeyError, IndexError, ValueError):
+    except (KeyError, IndexError, ValueError) as e:
+        print(f"[ai_assistant] Could not parse Gemini response: {e}. Raw: {response.text[:500]}")
         return _rule_based_fallback(destination, question), False
