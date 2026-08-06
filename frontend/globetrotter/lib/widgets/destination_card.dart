@@ -98,7 +98,7 @@ class _DestinationCardState extends State<DestinationCard> {
                     borderRadius: BorderRadius.circular(14),
                     boxShadow: [
                       BoxShadow(
-                        color: style.gradient.first.withValues(alpha: 0.35),
+                        color: style.gradient.first.withOpacity(0.35),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -141,7 +141,7 @@ class _DestinationCardState extends State<DestinationCard> {
                             .map((tag) => Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                   decoration: BoxDecoration(
-                                    color: AppColors.papaya.withValues(alpha: 0.1),
+                                    color: AppColors.papaya.withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Text(

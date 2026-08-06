@@ -8,9 +8,11 @@ class _ChatMessage {
   _ChatMessage(this.text, this.isUser);
 }
 
-/// Inline "ask a question about this place" widget. Answers come from
-/// Claude on the backend, grounded in the destination's own catalogue data
-/// and reviews -- free-form questions, not a fixed set of FAQ categories.
+/// Inline "ask a question about this place" widget. Answers come from a
+/// rule-based endpoint on the backend (keyword matching against the
+/// destination's own data) -- not a hosted AI model, which this
+/// environment has no way to call. Framed honestly to the user as a quick
+/// FAQ rather than a real assistant.
 class AskQuestionWidget extends StatefulWidget {
   final String destinationId;
   const AskQuestionWidget({super.key, required this.destinationId});

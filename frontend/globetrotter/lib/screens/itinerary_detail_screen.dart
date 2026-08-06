@@ -120,9 +120,7 @@ class _ItineraryDetailScreenState extends State<ItineraryDetailScreen> {
                         builder: (_) => ItineraryFormScreen(existing: _itinerary),
                       ),
                     );
-                    if (updated == true && context.mounted) {
-                      Navigator.of(context).pop();
-                    }
+                    if (updated == true) Navigator.of(context).pop();
                   },
                 ),
                 IconButton(

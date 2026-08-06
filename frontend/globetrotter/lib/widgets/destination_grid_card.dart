@@ -52,7 +52,7 @@ class _DestinationGridCardState extends State<DestinationGridCard> {
         borderRadius: BorderRadius.circular(AppRadius.card),
         clipBehavior: Clip.antiAlias,
         elevation: 1,
-        shadowColor: Colors.black.withValues(alpha: 0.08),
+        shadowColor: Colors.black.withOpacity(0.08),
         child: InkWell(
           onTap: widget.onTap,
           onTapDown: (_) => setState(() => _pressed = true),
@@ -79,7 +79,7 @@ class _DestinationGridCardState extends State<DestinationGridCard> {
                               ),
                             ),
                             child: Center(
-                              child: Icon(style.icon, color: Colors.white.withValues(alpha: 0.85), size: 44),
+                              child: Icon(style.icon, color: Colors.white.withOpacity(0.85), size: 44),
                             ),
                           ),
                         ),
@@ -94,7 +94,7 @@ class _DestinationGridCardState extends State<DestinationGridCard> {
                           ),
                         ),
                         child: Center(
-                          child: Icon(style.icon, color: Colors.white.withValues(alpha: 0.85), size: 44),
+                          child: Icon(style.icon, color: Colors.white.withOpacity(0.85), size: 44),
                         ),
                       ),
                     if (widget.destination.popularity >= 85)

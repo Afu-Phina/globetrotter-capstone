@@ -80,7 +80,7 @@ class _ItinerariesScreenState extends State<ItinerariesScreen> {
                             Container(
                               padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
-                                color: AppColors.marigold.withValues(alpha: 0.12),
+                                color: AppColors.marigold.withOpacity(0.12),
                                 shape: BoxShape.circle,
                               ),
                               child: const Icon(Icons.map_outlined, size: 40, color: AppColors.marigold),
@@ -115,7 +115,7 @@ class _ItinerariesScreenState extends State<ItinerariesScreen> {
                                   width: 44,
                                   height: 44,
                                   decoration: BoxDecoration(
-                                    color: (isShared ? AppColors.papaya : AppColors.forest).withValues(alpha: 0.1),
+                                    color: (isShared ? AppColors.papaya : AppColors.forest).withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Icon(

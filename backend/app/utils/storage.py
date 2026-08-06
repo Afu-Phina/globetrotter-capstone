@@ -12,12 +12,8 @@ import json
 import os
 import threading
 
-# All JSON "tables" live here. Overridable via GLOBETROTTER_DATA_DIR for
-# environments where the app's own directory isn't writable (e.g. Vercel's
-# serverless filesystem, where only /tmp can be written to).
-DATA_DIR = os.environ.get("GLOBETROTTER_DATA_DIR") or os.path.join(
-    os.path.dirname(os.path.dirname(__file__)), "data"
-)
+# All JSON "tables" live here.
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 
 # A simple lock so two requests writing at once don't corrupt a file.
 # (In-memory only -- fine for a single-process dev server in Phase 1.)
