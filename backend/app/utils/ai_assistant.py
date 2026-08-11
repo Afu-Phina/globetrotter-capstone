@@ -11,7 +11,9 @@ import os
 import requests
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-GEMINI_MODEL = "gemini-2.0-flash"
+# "flash-latest" is a rolling alias rather than a dated snapshot -- less
+# likely to hit a deprecated-model error as Google's lineup moves on.
+GEMINI_MODEL = "gemini-flash-latest"
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
 
 
@@ -66,7 +68,10 @@ def answer_question(destination: dict, question: str) -> tuple[str, bool]:
     try:
         response = requests.post(
             GEMINI_URL,
-            params={"key": GEMINI_API_KEY},
+            headers={
+                "Content-Type": "application/json",
+                "X-goog-api-key": GEMINI_API_KEY,
+            },
             json={"contents": [{"parts": [{"text": prompt}]}]},
             timeout=15,
         )
