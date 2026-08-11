@@ -6,6 +6,6 @@ import 'dart:io';
 // Every other native target (iOS simulator, desktop, physical device on
 // the same Wi-Fi via adb reverse) can use 127.0.0.1.
 String resolveBaseUrl() {
-  if (Platform.isAndroid) return 'http://10.0.2.2:5000/api';
-  return 'http://127.0.0.1:5000/api';
+  if (Platform.isAndroid) return 'http://172.20.10.3:5000/api';
+  return 'http://172.20.10.3:5000/api';
 }
