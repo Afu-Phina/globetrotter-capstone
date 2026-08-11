@@ -24,12 +24,6 @@ def _with_rating(destination: dict) -> dict:
 
 @destinations_bp.route("", methods=["GET"])
 def list_destinations():
-    """
-    GET /api/destinations
-    GET /api/destinations?q=market            -> text search (name/description/tags)
-    GET /api/destinations?category=Nature      -> filter by category
-    GET /api/destinations?limit=8&offset=0     -> pagination, for "Load More"
-    """
     destinations = read_all("destinations")
 
     query = (request.args.get("q") or "").strip().lower()
@@ -46,26 +40,21 @@ def list_destinations():
     if category:
         destinations = [d for d in destinations if d["category"].lower() == category]
 
-    # Default ordering: most popular first.
     destinations.sort(key=lambda d: d.get("popularity", 0), reverse=True)
 
     try:
-        offset = max(int(request.args.get("offset", 0)), 0)
+        limit = int(request.args.get("limit", 8))
+        offset = int(request.args.get("offset", 0))
     except ValueError:
-        offset = 0
-    try:
-        limit = int(request.args["limit"]) if "limit" in request.args else None
-    except ValueError:
-        limit = None
+        limit, offset = 8, 0
 
     total = len(destinations)
-    if limit is not None:
-        destinations = destinations[offset:offset + limit]
-    elif offset:
-        destinations = destinations[offset:]
+    page = destinations[offset:offset + limit]
 
-    with_ratings = [_with_rating(d) for d in destinations]
-    return jsonify({"items": with_ratings, "total": total}), 200
+    return jsonify({
+        "items": [_with_rating(d) for d in page],
+        "total": total,
+    }), 200
 
 
 @destinations_bp.route("/<destination_id>", methods=["GET"])
@@ -75,15 +64,9 @@ def get_destination(destination_id):
         return jsonify({"error": "Destination not found"}), 404
     return jsonify(_with_rating(destination)), 200
 
+
 @destinations_bp.route("/<destination_id>/nearby", methods=["GET"])
 def get_nearby_destinations(destination_id):
-    """
-    "Nearby" using our own curated destinations -- not a real Places API
-    (which we don't have a key for), so this is honest about its limits:
-    it surfaces other destinations we know about in the same neighborhood,
-    falling back to the same category if the neighborhood has nothing else.
-    It will never claim to know about restaurants/hotels we have no data on.
-    """
     destination = find_by_id("destinations", destination_id)
     if not destination:
         return jsonify({"error": "Destination not found"}), 404
@@ -105,11 +88,6 @@ def get_nearby_destinations(destination_id):
     results.sort(key=lambda d: d.get("popularity", 0), reverse=True)
     return jsonify([_with_rating(d) for d in results[:5]]), 200
 
-
-
-# ---------------------------------------------------------------------------
-# Reviews
-# ---------------------------------------------------------------------------
 
 @destinations_bp.route("/<destination_id>/reviews", methods=["GET"])
 def list_reviews(destination_id):
@@ -153,13 +131,6 @@ def add_review(current_user_id, destination_id):
 
     return jsonify(review), 201
 
-
-# ---------------------------------------------------------------------------
-# Ask a question -- backed by Google's Gemini API (see ai_assistant.py) so
-# visitors get real, contextual answers instead of keyword-matched
-# templates. Falls back to the old rule-based logic if the API key is
-# missing or the call fails, so the feature never goes fully dark.
-# ---------------------------------------------------------------------------
 
 @destinations_bp.route("/<destination_id>/ask", methods=["POST"])
 def ask_question(destination_id):
