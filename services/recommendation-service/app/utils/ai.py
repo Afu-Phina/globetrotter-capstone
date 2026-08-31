@@ -1,12 +1,8 @@
-"""
-AI-powered "ask a question" helper.
+"""Recommendation-service AI helper.
 
-Calls Claude to answer free-form questions about a destination, grounded in
-that destination's own data (description, category, neighborhood, tags,
-and a sample of its reviews) rather than a fixed set of keyword-matched
-categories. Falls back to a simple templated answer if no API key is
-configured or the request fails, so the feature degrades instead of
-breaking the endpoint.
+This module keeps the Claude/Anthropic integration but reuses the shared
+fallback logic from `shared.ai_helpers` so the two implementations stay
+consistent.
 """
 
 import os
@@ -14,34 +10,14 @@ import os
 import anthropic
 
 from app.utils.storage import read_all
+from shared.ai_helpers import fallback_answer
 
 _MODEL = "claude-opus-5"
 
 
-def _fallback_answer(destination: dict, question: str) -> str:
-    q = question.lower()
-    name = destination["name"]
-
-    if any(w in q for w in ["open", "hour", "time", "close"]):
-        return f"{name} is generally open during daytime hours. Exact hours can vary, so it's worth checking locally before you go."
-    if any(w in q for w in ["where", "location", "located", "address", "find"]):
-        return f"{name} is located in the {destination['neighborhood']} area of Yaoundé."
-    if any(w in q for w in ["cost", "price", "fee", "ticket", "how much"]):
-        return f"Entry fees for {name} can vary and may not always be posted online -- it's best to confirm on-site."
-    return (
-        f"{destination['description']} If you have a more specific question about "
-        f"{name}, try asking about its location, hours, or what makes it worth visiting."
-    )
-
-
 def answer_destination_question(destination: dict, question: str) -> str:
-    """
-    Answers any free-form question about a destination. Grounds the model in
-    the destination's own catalogue data and recent reviews so it doesn't
-    invent facts (exact prices, hours) the catalogue doesn't have.
-    """
     if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
-        return _fallback_answer(destination, question)
+        return fallback_answer(destination, question)
 
     reviews = [r for r in read_all("reviews") if r["destination_id"] == destination["id"]]
     review_snippets = "\n".join(f'- "{r["comment"]}" ({r["rating"]}/5)' for r in reviews[:5])
@@ -72,10 +48,10 @@ def answer_destination_question(destination: dict, question: str) -> str:
             messages=[{"role": "user", "content": question}],
         )
     except anthropic.AnthropicError:
-        return _fallback_answer(destination, question)
+        return fallback_answer(destination, question)
 
     if response.stop_reason == "refusal":
-        return _fallback_answer(destination, question)
+        return fallback_answer(destination, question)
 
     text = next((b.text for b in response.content if b.type == "text"), None)
-    return text or _fallback_answer(destination, question)
+    return text or fallback_answer(destination, question)
