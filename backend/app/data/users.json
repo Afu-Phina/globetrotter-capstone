@@ -4,5 +4,11 @@
     "name": "bi",
     "email": "abangbi384@gmail.com",
     "password_hash": "810129358e9b8470a19d01e1d6d60b8d$56b49be9c8e73a4ce8b080730a9ed218b773590c37db3887cd1d05f73a9c4ea1"
+  },
+  {
+    "id": "e1256508-182e-4c36-9577-225a908a2916",
+    "name": "Smoke Tester",
+    "email": "smoketest1788204931@example.com",
+    "password_hash": "249a0ac5ce84d47b023a0eda53f3803f$95c987abf41a9e1c3d7cb1e666e844e71a96e15e44f62258ee99dea5aa1739c9"
   }
 ]

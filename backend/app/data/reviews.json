@@ -115,5 +115,14 @@
     "rating": 5,
     "comment": "Loved the view!",
     "created_at": "2026-07-25T02:39:26.988420+00:00"
+  },
+  {
+    "id": "578c2cdd-6acd-472c-9acb-f6a7628d8d56",
+    "destination_id": "dest-001",
+    "user_id": "e1256508-182e-4c36-9577-225a908a2916",
+    "author_name": "Smoke Tester",
+    "rating": 5,
+    "comment": "Amazing place! Smoke test.",
+    "created_at": "2026-08-31T19:35:31.695609+00:00"
   }
 ]

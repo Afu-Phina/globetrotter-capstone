@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "a005dac9-652c-49b1-b6ac-862a1a7ead72",
+    "user_id": "e1256508-182e-4c36-9577-225a908a2916",
+    "destination_id": "dest-001",
+    "destination_name": "Mvog-Betsi Zoo",
+    "date": "2026-09-05",
+    "time": "10:00",
+    "num_people": 2,
+    "special_requests": "",
+    "status": "confirmed",
+    "created_at": "2026-08-31T19:35:31.785385+00:00"
+  }
+]

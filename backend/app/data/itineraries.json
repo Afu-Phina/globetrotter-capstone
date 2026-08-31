@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "id": "cf15e7bc-6662-4c49-974b-7c2c30ffe71a",
+    "owner_id": "e1256508-182e-4c36-9577-225a908a2916",
+    "title": "Smoke Test Trip",
+    "start_date": null,
+    "end_date": null,
+    "destination_ids": [
+      "dest-001"
+    ],
+    "notes": "",
+    "shared_with": [],
+    "created_at": "2026-08-31T19:35:31.647563+00:00"
+  }
+]
