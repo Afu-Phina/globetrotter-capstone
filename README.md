@@ -133,3 +133,10 @@ All data is persisted in plain JSON files inside the `data/` directory:
 | `PORT`               | `5000`                               | Port the app listens on |
 
 > **Important:** Always set `SECRET_KEY` to a long, random value in production (e.g. `python -c "import secrets; print(secrets.token_hex(32))"`).
+
+---
+
+## Design Phases
+
+The project follows an explicit set of design phases (dashboard, place details, chat QA, bookings, sharing, profile, media, and responsive polish). See [PHASES.md](PHASES.md) for a mapping from each design phase to the files, endpoints, and data in this repository along with recommended next steps and verification checks.
+
